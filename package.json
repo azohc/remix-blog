@@ -7,7 +7,8 @@
     "typecheck": "tsc",
     "lint": "eslint .",
     "format": "prettier --check --write .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "codegen": "graphql-codegen --config codegen.ts && yarn format && node ./app/graphql/generated/fixer.mjs"
   },
   "dependencies": {
     "@remix-run/node": "^1.14.3",
@@ -16,12 +17,17 @@
     "@vercel/node": "^2.6.2",
     "isbot": "^3.6.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tiny-invariant": "^1.3.1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^3.2.2",
+    "@graphql-codegen/client-preset": "^2.1.1",
+    "@graphql-codegen/typescript-graphql-request": "^4.5.9",
     "@remix-run/dev": "^1.14.3",
     "@remix-run/eslint-config": "^1.14.3",
     "@remix-run/serve": "^1.14.3",
+    "@types/marked": "^4.0.8",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
@@ -29,10 +35,12 @@
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "graphql": "^16.6.0",
+    "husky": "^8.0.0",
+    "marked": "^4.3.0",
     "prettier": "^2.8.7",
     "tailwindcss": "^3.2.7",
-    "typescript": "^4.8.4",
-    "husky": "^8.0.0"
+    "typescript": "^5.0.2"
   },
   "engines": {
     "node": ">=14"

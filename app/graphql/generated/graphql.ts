@@ -3554,12 +3554,29 @@ export enum _SystemDateTimeFieldVariation {
   Localization = "localization",
 }
 
+export type CreatePostMutationVariables = Exact<{
+  title: Scalars["String"]
+  slug: Scalars["String"]
+  content: Scalars["String"]
+  tags?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>
+}>
+
+export type CreatePostMutation = {
+  createPost?: { id: string } | null
+}
+
 export type GetPostBySlugQueryVariables = Exact<{
   slug: Scalars["String"]
 }>
 
 export type GetPostBySlugQuery = {
-  post?: { id: string; title: string; content: string } | null
+  post?: {
+    id: string
+    slug: string
+    title: string
+    content: string
+    tags: Array<string>
+  } | null
 }
 
 export type GetPostsQueryVariables = Exact<{ [key: string]: never }>
@@ -3573,12 +3590,33 @@ export type GetPostsQuery = {
   }>
 }
 
+export const CreatePostDocument = /*#__PURE__*/ gql`
+  mutation CreatePost(
+    $title: String!
+    $slug: String!
+    $content: String!
+    $tags: [String!]
+  ) {
+    createPost(
+      data: {
+        title: $title
+        slug: $slug
+        content: $content
+        tags: $tags
+      }
+    ) {
+      id
+    }
+  }
+`
 export const GetPostBySlugDocument = /*#__PURE__*/ gql`
   query GetPostBySlug($slug: String!) {
     post(where: { slug: $slug }) {
       id
+      slug
       title
       content
+      tags
     }
   }
 `
@@ -3610,6 +3648,21 @@ export function getSdk(
   withWrapper: SdkFunctionWrapper = defaultWrapper
 ) {
   return {
+    CreatePost(
+      variables: CreatePostMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<CreatePostMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreatePostMutation>(
+            CreatePostDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "CreatePost",
+        "mutation"
+      )
+    },
     GetPostBySlug(
       variables: GetPostBySlugQueryVariables,
       requestHeaders?: Dom.RequestInit["headers"]

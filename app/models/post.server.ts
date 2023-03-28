@@ -1,8 +1,11 @@
 import type {
+  CreatePostMutation,
+  CreatePostMutationVariables,
   GetPostBySlugQuery,
   GetPostBySlugQueryVariables,
   GetPostsQuery,
 } from "~/graphql/generated/graphql"
+import { CreatePostDocument } from "~/graphql/generated/graphql"
 import { GetPostBySlugDocument } from "~/graphql/generated/graphql"
 import { GetPostsDocument } from "~/graphql/generated/graphql"
 import { gql } from "~/lib/client"
@@ -11,9 +14,10 @@ export async function getPosts() {
   return gql.request<GetPostsQuery>(GetPostsDocument)
 }
 
-export async function getPost(slug: string) {
-  const vars: GetPostBySlugQueryVariables = {
-    slug,
-  }
+export async function getPost(vars: GetPostBySlugQueryVariables) {
   return gql.request<GetPostBySlugQuery>(GetPostBySlugDocument, vars)
+}
+
+export async function createPost(vars: CreatePostMutationVariables) {
+  return gql.request<CreatePostMutation>(CreatePostDocument, vars)
 }

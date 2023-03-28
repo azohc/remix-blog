@@ -8,6 +8,7 @@ module.exports = {
     process.env.NODE_ENV === "development"
       ? undefined
       : "./server.js",
+serverDependenciesToBundle: [/.*/],
   serverBuildPath: "api/index.js",
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",

@@ -1,0 +1,23 @@
+mutation UpdatePostBySlug(
+  $slug: String!
+  $newSlug: String
+  $newTitle: String
+  $newContent: String
+  $newTags: [String!]
+) {
+  updatePost(
+    where: { slug: $slug }
+    data: {
+      slug: $newSlug
+      title: $newTitle
+      content: $newContent
+      tags: $newTags
+    }
+  ) {
+    id
+    slug
+    title
+    content
+    tags
+  }
+}

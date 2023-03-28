@@ -3598,6 +3598,24 @@ export type PublishPostMutation = {
   publishPost?: { id: string; slug: string } | null
 }
 
+export type UpdatePostBySlugMutationVariables = Exact<{
+  slug: Scalars["String"]
+  newSlug?: InputMaybe<Scalars["String"]>
+  newTitle?: InputMaybe<Scalars["String"]>
+  newContent?: InputMaybe<Scalars["String"]>
+  newTags?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>
+}>
+
+export type UpdatePostBySlugMutation = {
+  updatePost?: {
+    id: string
+    slug: string
+    title: string
+    content: string
+    tags: Array<string>
+  } | null
+}
+
 export const CreatePostDocument = /*#__PURE__*/ gql`
   mutation CreatePost(
     $title: String!
@@ -3643,6 +3661,31 @@ export const PublishPostDocument = /*#__PURE__*/ gql`
     publishPost(where: { id: $id }) {
       id
       slug
+    }
+  }
+`
+export const UpdatePostBySlugDocument = /*#__PURE__*/ gql`
+  mutation UpdatePostBySlug(
+    $slug: String!
+    $newSlug: String
+    $newTitle: String
+    $newContent: String
+    $newTags: [String!]
+  ) {
+    updatePost(
+      where: { slug: $slug }
+      data: {
+        slug: $newSlug
+        title: $newTitle
+        content: $newContent
+        tags: $newTags
+      }
+    ) {
+      id
+      slug
+      title
+      content
+      tags
     }
   }
 `
@@ -3720,6 +3763,21 @@ export function getSdk(
             { ...requestHeaders, ...wrappedRequestHeaders }
           ),
         "PublishPost",
+        "mutation"
+      )
+    },
+    UpdatePostBySlug(
+      variables: UpdatePostBySlugMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<UpdatePostBySlugMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<UpdatePostBySlugMutation>(
+            UpdatePostBySlugDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "UpdatePostBySlug",
         "mutation"
       )
     },

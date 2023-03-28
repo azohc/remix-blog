@@ -3565,6 +3565,14 @@ export type CreatePostMutation = {
   createPost?: { id: string } | null
 }
 
+export type DeletePostBySlugMutationVariables = Exact<{
+  slug: Scalars["String"]
+}>
+
+export type DeletePostBySlugMutation = {
+  deletePost?: { id: string } | null
+}
+
 export type GetPostBySlugQueryVariables = Exact<{
   slug: Scalars["String"]
 }>
@@ -3631,6 +3639,13 @@ export const CreatePostDocument = /*#__PURE__*/ gql`
         tags: $tags
       }
     ) {
+      id
+    }
+  }
+`
+export const DeletePostBySlugDocument = /*#__PURE__*/ gql`
+  mutation DeletePostBySlug($slug: String!) {
+    deletePost(where: { slug: $slug }) {
       id
     }
   }
@@ -3719,6 +3734,21 @@ export function getSdk(
             { ...requestHeaders, ...wrappedRequestHeaders }
           ),
         "CreatePost",
+        "mutation"
+      )
+    },
+    DeletePostBySlug(
+      variables: DeletePostBySlugMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<DeletePostBySlugMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<DeletePostBySlugMutation>(
+            DeletePostBySlugDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "DeletePostBySlug",
         "mutation"
       )
     },

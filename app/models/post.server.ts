@@ -1,6 +1,8 @@
 import type {
   CreatePostMutation,
   CreatePostMutationVariables,
+  DeletePostBySlugMutation,
+  DeletePostBySlugMutationVariables,
   GetPostBySlugQuery,
   GetPostBySlugQueryVariables,
   GetPostsQuery,
@@ -8,6 +10,7 @@ import type {
   UpdatePostBySlugMutation,
   UpdatePostBySlugMutationVariables,
 } from "~/graphql/generated/graphql"
+import { DeletePostBySlugDocument } from "~/graphql/generated/graphql"
 import { UpdatePostBySlugDocument } from "~/graphql/generated/graphql"
 import { PublishPostDocument } from "~/graphql/generated/graphql"
 import { CreatePostDocument } from "~/graphql/generated/graphql"
@@ -51,4 +54,14 @@ export async function updatePost(
   })
 
   return updatePost
+}
+
+export async function deletePost(
+  vars: DeletePostBySlugMutationVariables
+) {
+  const { deletePost } = await gql.request<DeletePostBySlugMutation>(
+    DeletePostBySlugDocument,
+    vars
+  )
+  return deletePost
 }

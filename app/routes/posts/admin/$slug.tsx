@@ -8,47 +8,68 @@ import {
   useNavigation,
 } from "@remix-run/react"
 import invariant from "tiny-invariant"
-import { getPost, updatePost } from "~/models/post.server"
+import { deletePost, getPost, updatePost } from "~/models/post.server"
 
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, "params.slug is required")
   const { post } = await getPost({ slug: params.slug })
+  if (!post) {
+    return redirect("/posts/admin")
+  }
   return json(post)
 }
 
-export const action = async ({ params, request }: ActionArgs) => {
-  // TODO handle delete post
-  invariant(params.slug, "params.slug is required")
+const handlePutRequest = async (slug: string, request: Request) => {
   const formData = await request.formData()
 
-  const title = formData.get("title")
-  const slug = formData.get("slug")
-  const content = formData.get("content")
+  const newTitle = formData.get("title")
+  const newSlug = formData.get("slug")
+  const newContent = formData.get("content")
 
   const errors = {
-    title: title ? null : "title is required",
-    slug: slug ? null : "slug is required",
-    content: content ? null : "content is required",
+    title: newTitle ? null : "title is required",
+    slug: newSlug ? null : "slug is required",
+    content: newContent ? null : "content is required",
   }
 
-  if (!title || !slug || !content) {
+  if (!newTitle || !newSlug || !newContent) {
     return json(errors)
   }
 
-  invariant(typeof title === "string", "title must be a string")
-  invariant(typeof slug === "string", "slug must be a string")
-  invariant(typeof content === "string", "content must be a string")
+  invariant(typeof newTitle === "string", "title must be a string")
+  invariant(typeof newSlug === "string", "slug must be a string")
+  invariant(
+    typeof newContent === "string",
+    "content must be a string"
+  )
 
   await updatePost({
-    slug: params.slug,
-    newSlug: slug,
-    newTitle: title,
-    newContent: content,
+    slug,
+    newSlug,
+    newTitle,
+    newContent,
     // TODO tags
-    // newTags: tags
+    // newTags
   })
 
   return redirect(`/posts/${slug}`)
+}
+
+const handleDeleteRequest = async (slug: string) => {
+  await deletePost({ slug })
+  return redirect("/posts")
+}
+
+export const action = async ({ params, request }: ActionArgs) => {
+  invariant(params.slug, `params.slug is required`)
+  switch (request.method) {
+    case "PUT":
+      return await handlePutRequest(params.slug, request)
+    case "DELETE":
+      return await handleDeleteRequest(params.slug)
+    default:
+      throw new Error("unsupported method")
+  }
 }
 
 const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg`
@@ -60,67 +81,73 @@ export default function PostAdmin() {
   const errors = useActionData<typeof action>()
 
   return (
-    <Form method="post">
-      <p>
-        <label>
-          Post Title:{" "}
-          {errors?.title ? (
-            <em className="text-red-600">{errors.title}</em>
-          ) : null}
-          <input
-            type="text"
-            name="title"
-            defaultValue={post?.title}
-            className={inputClassName}
+    <>
+      <Form method="put">
+        <p>
+          <label>
+            Post Title:{" "}
+            {errors?.title ? (
+              <em className="text-red-600">{errors.title}</em>
+            ) : null}
+            <input
+              type="text"
+              name="title"
+              defaultValue={post?.title}
+              className={inputClassName}
+              required
+            />
+          </label>
+        </p>
+        <p>
+          <label>
+            Post Slug:{" "}
+            {errors?.slug ? (
+              <em className="text-red-600">{errors.slug}</em>
+            ) : null}
+            <input
+              type="text"
+              name="slug"
+              defaultValue={post?.slug}
+              className={inputClassName}
+              required
+            />
+          </label>
+        </p>
+        <p>
+          <label htmlFor="markdown">
+            Markdown:{" "}
+            {errors?.content ? (
+              <em className="text-red-600">{errors.content}</em>
+            ) : null}
+          </label>
+          <br />
+          <textarea
+            id="newContent"
+            rows={20}
+            name="newContent"
+            defaultValue={post?.content}
+            className={`${inputClassName} font-mono`}
             required
           />
-        </label>
-      </p>
-      <p>
-        <label>
-          Post Slug:{" "}
-          {errors?.slug ? (
-            <em className="text-red-600">{errors.slug}</em>
-          ) : null}
-          <input
-            type="text"
-            name="slug"
-            defaultValue={post?.slug}
-            className={inputClassName}
-            required
-          />
-        </label>
-      </p>
-      <p>
-        <label htmlFor="markdown">
-          Markdown:{" "}
-          {errors?.content ? (
-            <em className="text-red-600">{errors.content}</em>
-          ) : null}
-        </label>
-        <br />
-        <textarea
-          id="content"
-          rows={20}
-          name="content"
-          defaultValue={post?.content}
-          className={`${inputClassName} font-mono`}
-          required
-        />
-      </p>
-      <p className="text-right">
+        </p>
+        <p className="text-right">
+          <button
+            type="submit"
+            className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
+            disabled={isUpdating}
+          >
+            {isUpdating ? "Updating..." : "Update"}
+          </button>
+        </p>
+      </Form>
+      <Form method="delete">
         <button
           type="submit"
-          className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
-          disabled={isUpdating}
+          className="rounded bg-red-500 py-2 px-4 text-white hover:bg-red-600 focus:bg-red-400 disabled:bg-red-300"
         >
-          {isUpdating ? "Updating..." : "Update"}
+          Delete post
         </button>
-      </p>
-    </Form>
-    // TODO
-    // <Form method="delete">
-    //   <button type="submit">Delete post</button>
-    // </Form>
+      </Form>
+    </>
   )
 }

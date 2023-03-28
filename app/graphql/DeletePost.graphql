@@ -1,0 +1,5 @@
+mutation DeletePostBySlug($slug: String!) {
+  deletePost(where: { slug: $slug }) {
+    id
+  }
+}

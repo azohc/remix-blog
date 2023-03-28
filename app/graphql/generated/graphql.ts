@@ -3595,7 +3595,7 @@ export type PublishPostMutationVariables = Exact<{
 }>
 
 export type PublishPostMutation = {
-  publishPost?: { id: string } | null
+  publishPost?: { id: string; slug: string } | null
 }
 
 export const CreatePostDocument = /*#__PURE__*/ gql`
@@ -3642,6 +3642,7 @@ export const PublishPostDocument = /*#__PURE__*/ gql`
   mutation PublishPost($id: ID) {
     publishPost(where: { id: $id }) {
       id
+      slug
     }
   }
 `

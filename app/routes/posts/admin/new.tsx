@@ -33,13 +33,14 @@ export const action = async ({ request }: ActionArgs) => {
     content,
   })
 
-  return redirect("/posts/admin")
+  return redirect(`/posts/${slug}`)
 }
 
 const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg`
 
 export default function NewPost() {
   const navigation = useNavigation()
+  const isCreating = navigation.state === "submitting"
 
   const errors = useActionData<typeof action>()
 
@@ -55,6 +56,7 @@ export default function NewPost() {
             type="text"
             name="title"
             className={inputClassName}
+            required
           />
         </label>
       </p>
@@ -64,7 +66,12 @@ export default function NewPost() {
           {errors?.slug ? (
             <em className="text-red-600">{errors.slug}</em>
           ) : null}
-          <input type="text" name="slug" className={inputClassName} />
+          <input
+            type="text"
+            name="slug"
+            className={inputClassName}
+            required
+          />
         </label>
       </p>
       <p>
@@ -80,17 +87,16 @@ export default function NewPost() {
           rows={20}
           name="content"
           className={`${inputClassName} font-mono`}
+          required
         />
       </p>
       <p className="text-right">
         <button
           type="submit"
           className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
-          disabled={navigation.state === "submitting"}
+          disabled={isCreating}
         >
-          {navigation.state === "submitting"
-            ? "Creating..."
-            : "Create Post"}
+          {isCreating ? "Creating..." : "Create Post"}
         </button>
       </p>
     </Form>

@@ -1,7 +1,7 @@
 import type { ActionArgs } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
-import { Form, useActionData } from "@remix-run/react"
+import { Form, useActionData, useNavigation } from "@remix-run/react"
 import invariant from "tiny-invariant"
 
 import { createPost } from "~/models/post.server"
@@ -16,7 +16,6 @@ export const action = async ({ request }: ActionArgs) => {
   const errors = {
     title: title ? null : "title is required",
     slug: slug ? null : "slug is required",
-    // TODO fix content is required error from UI
     content: content ? null : "content is required",
   }
 
@@ -40,6 +39,8 @@ export const action = async ({ request }: ActionArgs) => {
 const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg`
 
 export default function NewPost() {
+  const navigation = useNavigation()
+
   const errors = useActionData<typeof action>()
 
   return (
@@ -75,9 +76,9 @@ export default function NewPost() {
         </label>
         <br />
         <textarea
-          id="markdown"
+          id="content"
           rows={20}
-          name="markdown"
+          name="content"
           className={`${inputClassName} font-mono`}
         />
       </p>
@@ -85,8 +86,11 @@ export default function NewPost() {
         <button
           type="submit"
           className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
+          disabled={navigation.state === "submitting"}
         >
-          Create Post
+          {navigation.state === "submitting"
+            ? "Creating..."
+            : "Create Post"}
         </button>
       </p>
     </Form>

@@ -1,0 +1,5 @@
+mutation PublishPost($id: ID) {
+  publishPost(where: { id: $id }) {
+    id
+  }
+}

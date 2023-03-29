@@ -9,6 +9,7 @@ import PostView from "~/components/PostView"
 import {
   connectCommentToPost,
   createComment,
+  createCommentReply,
   getPost,
   getPostComments,
 } from "~/models/post.server"
@@ -26,21 +27,11 @@ export const loader = async ({ params }: LoaderArgs) => {
   return json({ post, html, comments })
 }
 
-export const action = async ({ params, request }: ActionArgs) => {
-  const slug = params.slug
-  invariant(slug, `params.slug is required`)
+async function handlePostRequest(slug: string, request: Request) {
   const formData = await request.formData()
 
   const author = formData.get("author")
   const comment = formData.get("comment")
-
-  const errors = {
-    comment: comment ? null : "comment can't be empty",
-  }
-
-  if (!comment) {
-    return json(errors)
-  }
 
   invariant(typeof author === "string", "author must be a string")
   invariant(typeof comment === "string", "comment must be a string")
@@ -48,8 +39,44 @@ export const action = async ({ params, request }: ActionArgs) => {
   const { id } = await createComment({ content: comment, author })
 
   await connectCommentToPost({ slug, commentId: id })
+}
 
-  // TODO  SAVE REPLIES TO COMMENTS
+async function handlePatchRequest(slug: string, request: Request) {
+  const formData = await request.formData()
+
+  const author = formData.get("author")
+  const comment = formData.get("comment")
+  const parentCommentId = formData.get("parent")?.toString()
+
+  invariant(typeof author === "string", "author must be a string")
+  invariant(typeof comment === "string", "comment must be a string")
+  invariant(
+    parentCommentId,
+    "Comment component must pass the parent comment id in order to link the reply"
+  )
+
+  const { id } = await createCommentReply({
+    content: comment,
+    author,
+    parentCommentId,
+  })
+
+  await connectCommentToPost({ slug, commentId: id })
+}
+
+export const action = async ({ params, request }: ActionArgs) => {
+  const slug = params.slug
+  invariant(slug, `params.slug is required`)
+
+  switch (request.method) {
+    case "POST":
+      await handlePostRequest(slug, request)
+      break
+    case "PATCH":
+      await handlePatchRequest(slug, request)
+      break
+  }
+
   return redirect("")
 }
 export default function PostSlug() {

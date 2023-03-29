@@ -1,0 +1,15 @@
+mutation CreateCommentReply(
+  $author: String
+  $content: String!
+  $parentCommentId: ID!
+) {
+  createComment(
+    data: {
+      author: $author
+      content: $content
+      parent: { connect: { id: $parentCommentId } }
+    }
+  ) {
+    id
+  }
+}

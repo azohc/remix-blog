@@ -4276,6 +4276,16 @@ export type CreateCommentMutation = {
   createComment?: { id: string } | null
 }
 
+export type CreateCommentReplyMutationVariables = Exact<{
+  author?: InputMaybe<Scalars["String"]>
+  content: Scalars["String"]
+  parentCommentId: Scalars["ID"]
+}>
+
+export type CreateCommentReplyMutation = {
+  createComment?: { id: string } | null
+}
+
 export type CreatePostMutationVariables = Exact<{
   title: Scalars["String"]
   slug: Scalars["String"]
@@ -4318,9 +4328,11 @@ export type GetPostCommentsQueryVariables = Exact<{
 export type GetPostCommentsQuery = {
   post?: {
     comments: Array<{
+      id: string
       author?: string | null
       content: string
       createdAt: any
+      parent?: { id: string } | null
     }>
   } | null
 }
@@ -4387,6 +4399,23 @@ export const CreateCommentDocument = /*#__PURE__*/ gql`
     }
   }
 `
+export const CreateCommentReplyDocument = /*#__PURE__*/ gql`
+  mutation CreateCommentReply(
+    $author: String
+    $content: String!
+    $parentCommentId: ID!
+  ) {
+    createComment(
+      data: {
+        author: $author
+        content: $content
+        parent: { connect: { id: $parentCommentId } }
+      }
+    ) {
+      id
+    }
+  }
+`
 export const CreatePostDocument = /*#__PURE__*/ gql`
   mutation CreatePost(
     $title: String!
@@ -4430,9 +4459,13 @@ export const GetPostCommentsDocument = /*#__PURE__*/ gql`
   query GetPostComments($slug: String!) {
     post(where: { slug: $slug }) {
       comments {
+        id
         author
         content
         createdAt
+        parent {
+          id
+        }
       }
     }
   }
@@ -4532,6 +4565,21 @@ export function getSdk(
             { ...requestHeaders, ...wrappedRequestHeaders }
           ),
         "CreateComment",
+        "mutation"
+      )
+    },
+    CreateCommentReply(
+      variables: CreateCommentReplyMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<CreateCommentReplyMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateCommentReplyMutation>(
+            CreateCommentReplyDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "CreateCommentReply",
         "mutation"
       )
     },

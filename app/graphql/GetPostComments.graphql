@@ -1,9 +1,13 @@
 query GetPostComments($slug: String!) {
   post(where: { slug: $slug }) {
     comments {
+      id
       author
       content
       createdAt
+      parent {
+        id
+      }
     }
   }
 }

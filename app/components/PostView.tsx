@@ -1,4 +1,5 @@
 import { Form } from "@remix-run/react"
+import Comment from "./Comment"
 
 interface PostViewProps {
   post: {
@@ -12,12 +13,19 @@ interface PostViewProps {
   }
   html: string
   comments: {
+    id: string
     author?: string | null | undefined
     content: string
     createdAt?: string
+    parent?:
+      | {
+          id: string
+        }
+      | null
+      | undefined
   }[]
 }
-const formatDateTime = (datestr: string) => {
+export const formatDateTime = (datestr: string) => {
   const date = new Date(datestr)
   const locale = "en-ES"
   return `${date.toLocaleDateString(locale, {
@@ -29,6 +37,7 @@ const formatDateTime = (datestr: string) => {
     minute: "numeric",
   })}`
 }
+
 export default function PostView({
   post,
   html,
@@ -73,8 +82,8 @@ export default function PostView({
           <textarea id="comment" name="comment" required />
           <button type="submit">Submit</button>
         </Form>
-        {comments.map((c, i) => (
-          <p key={i}>{JSON.stringify(c)}</p>
+        {comments.map((comment, i) => (
+          <Comment key={i} comment={comment} />
         ))}
       </section>
     </main>

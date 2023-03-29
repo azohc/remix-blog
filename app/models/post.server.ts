@@ -1,10 +1,11 @@
 import {
-  ConnectCommentToPostDocument,
   ConnectCommentToPostMutation,
   ConnectCommentToPostMutationVariables,
-  CreateCommentDocument,
   CreateCommentMutation,
   CreateCommentMutationVariables,
+  CreateCommentReplyDocument,
+  CreateCommentReplyMutation,
+  CreateCommentReplyMutationVariables,
   CreatePostMutation,
   CreatePostMutationVariables,
   DeletePostBySlugMutation,
@@ -14,11 +15,15 @@ import {
   GetPostQuery,
   GetPostQueryVariables,
   GetPostsQuery,
-  PublishCommentDocument,
   PublishCommentMutation,
   PublishPostMutation,
   UpdatePostBySlugMutation,
   UpdatePostBySlugMutationVariables,
+} from "~/graphql/generated/graphql"
+import {
+  ConnectCommentToPostDocument,
+  CreateCommentDocument,
+  PublishCommentDocument,
 } from "~/graphql/generated/graphql"
 import { GetPostCommentsDocument } from "~/graphql/generated/graphql"
 import { GetPostDocument } from "~/graphql/generated/graphql"
@@ -150,4 +155,24 @@ export async function connectCommentToPost(
   }
   await publishPost(updatePost.id)
   return updatePost
+}
+
+export async function createCommentReply(
+  vars: CreateCommentReplyMutationVariables
+) {
+  const { createComment } =
+    await gql.request<CreateCommentReplyMutation>(
+      CreateCommentReplyDocument,
+      vars
+    )
+  if (!createComment) {
+    throw new Error(
+      `an error occurred while creating the comment with variables ${JSON.stringify(
+        vars
+      )}`
+    )
+  }
+
+  await publishComment(createComment.id)
+  return createComment
 }

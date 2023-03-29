@@ -1,0 +1,8 @@
+mutation ConnectCommentToPost($slug: String!, $commentId: ID!) {
+  updatePost(
+    where: { slug: $slug }
+    data: { comments: { connect: { where: { id: $commentId } } } }
+  ) {
+    id
+  }
+}

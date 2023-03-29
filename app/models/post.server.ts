@@ -1,20 +1,31 @@
-import type {
+import {
+  ConnectCommentToPostDocument,
+  ConnectCommentToPostMutation,
+  ConnectCommentToPostMutationVariables,
+  CreateCommentDocument,
+  CreateCommentMutation,
+  CreateCommentMutationVariables,
   CreatePostMutation,
   CreatePostMutationVariables,
   DeletePostBySlugMutation,
   DeletePostBySlugMutationVariables,
-  GetPostBySlugQuery,
-  GetPostBySlugQueryVariables,
+  GetPostCommentsQuery,
+  GetPostCommentsQueryVariables,
+  GetPostQuery,
+  GetPostQueryVariables,
   GetPostsQuery,
+  PublishCommentDocument,
+  PublishCommentMutation,
   PublishPostMutation,
   UpdatePostBySlugMutation,
   UpdatePostBySlugMutationVariables,
 } from "~/graphql/generated/graphql"
+import { GetPostCommentsDocument } from "~/graphql/generated/graphql"
+import { GetPostDocument } from "~/graphql/generated/graphql"
 import { PublishPostDocument } from "~/graphql/generated/graphql"
 import { DeletePostBySlugDocument } from "~/graphql/generated/graphql"
 import { UpdatePostBySlugDocument } from "~/graphql/generated/graphql"
 import { CreatePostDocument } from "~/graphql/generated/graphql"
-import { GetPostBySlugDocument } from "~/graphql/generated/graphql"
 import { GetPostsDocument } from "~/graphql/generated/graphql"
 import { gql } from "~/lib/client"
 
@@ -24,8 +35,8 @@ export async function getPosts() {
   })
 }
 
-export async function getPost(vars: GetPostBySlugQueryVariables) {
-  return gql.request<GetPostBySlugQuery>(GetPostBySlugDocument, vars)
+export async function getPost(vars: GetPostQueryVariables) {
+  return gql.request<GetPostQuery>(GetPostDocument, vars)
 }
 
 export async function createPost(vars: CreatePostMutationVariables) {
@@ -34,7 +45,9 @@ export async function createPost(vars: CreatePostMutationVariables) {
     vars
   )
   if (!createPost) {
-    throw new Error("an error ocurred while creating the post")
+    throw new Error(
+      `an error ocurred while creating the post with slug ${vars.slug}`
+    )
   }
   await publishPost(createPost.id)
 }
@@ -47,7 +60,9 @@ export async function updatePost(
     vars
   )
   if (!updatePost) {
-    throw new Error("an error occurred while updating the post")
+    throw new Error(
+      `an error occurred while updating the post with slug ${vars.slug}`
+    )
   }
 
   await publishPost(updatePost.id)
@@ -73,4 +88,66 @@ export async function deletePost(
     vars
   )
   return deletePost
+}
+
+export async function getPostComments(
+  vars: GetPostCommentsQueryVariables
+) {
+  const { post } = await gql.request<GetPostCommentsQuery>(
+    GetPostCommentsDocument,
+    vars
+  )
+  if (!post) {
+    throw new Error(
+      `an error occurred when fetching the comments for the post with slug ${vars.slug}`
+    )
+  }
+  return post.comments
+}
+
+async function publishComment(id: string) {
+  const { publishComment } =
+    await gql.request<PublishCommentMutation>(
+      PublishCommentDocument,
+      {
+        id,
+      }
+    )
+  return publishComment
+}
+
+export async function createComment(
+  vars: CreateCommentMutationVariables
+) {
+  const { createComment } = await gql.request<CreateCommentMutation>(
+    CreateCommentDocument,
+    vars
+  )
+  if (!createComment) {
+    throw new Error(
+      `an error occurred while creating the comment with variables ${JSON.stringify(
+        vars
+      )}`
+    )
+  }
+
+  await publishComment(createComment.id)
+  return createComment
+}
+
+export async function connectCommentToPost(
+  vars: ConnectCommentToPostMutationVariables
+) {
+  const { updatePost } =
+    await gql.request<ConnectCommentToPostMutation>(
+      ConnectCommentToPostDocument,
+      vars
+    )
+  if (!updatePost) {
+    throw new Error(
+      `an error occurred while updating the post with slug ${vars.slug}`
+    )
+  }
+  await publishPost(updatePost.id)
+  return updatePost
 }

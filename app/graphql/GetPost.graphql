@@ -1,11 +1,11 @@
-query GetPostBySlug($slug: String!) {
+query GetPost($slug: String!) {
   post(where: { slug: $slug }) {
     id
     slug
     title
     content
     tags
-    publishedAt
+    createdAt
     updatedAt
   }
 }

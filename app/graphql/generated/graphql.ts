@@ -707,7 +707,7 @@ export type ColorInput = {
 }
 
 export type Comment = Node & {
-  comments: Array<Comment>
+  author?: Maybe<Scalars["String"]>
   content: Scalars["String"]
   /** The time the document was created */
   createdAt: Scalars["DateTime"]
@@ -719,6 +719,8 @@ export type Comment = Node & {
   history: Array<Version>
   /** The unique identifier */
   id: Scalars["ID"]
+  /** Parent comment */
+  parent?: Maybe<Comment>
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars["DateTime"]>
   /** User that last published this document */
@@ -730,18 +732,6 @@ export type Comment = Node & {
   updatedAt: Scalars["DateTime"]
   /** User that last updated this document */
   updatedBy?: Maybe<User>
-}
-
-export type CommentCommentsArgs = {
-  after?: InputMaybe<Scalars["String"]>
-  before?: InputMaybe<Scalars["String"]>
-  first?: InputMaybe<Scalars["Int"]>
-  forceParentLocale?: InputMaybe<Scalars["Boolean"]>
-  last?: InputMaybe<Scalars["Int"]>
-  locales?: InputMaybe<Array<Locale>>
-  orderBy?: InputMaybe<CommentOrderByInput>
-  skip?: InputMaybe<Scalars["Int"]>
-  where?: InputMaybe<CommentWhereInput>
 }
 
 export type CommentCreatedByArgs = {
@@ -759,6 +749,11 @@ export type CommentHistoryArgs = {
   limit?: Scalars["Int"]
   skip?: Scalars["Int"]
   stageOverride?: InputMaybe<Stage>
+}
+
+export type CommentParentArgs = {
+  forceParentLocale?: InputMaybe<Scalars["Boolean"]>
+  locales?: InputMaybe<Array<Locale>>
 }
 
 export type CommentPublishedByArgs = {
@@ -799,11 +794,12 @@ export type CommentConnection = {
 }
 
 export type CommentCreateInput = {
+  author?: InputMaybe<Scalars["String"]>
   clfte6hew2lvq01uo3geddoic?: InputMaybe<PostCreateManyInlineInput>
-  clfte79qv2i9a01up5wou5fd9?: InputMaybe<CommentCreateManyInlineInput>
-  comments?: InputMaybe<CommentCreateManyInlineInput>
+  clftwc3vd37y701unglntb45o?: InputMaybe<CommentCreateManyInlineInput>
   content: Scalars["String"]
   createdAt?: InputMaybe<Scalars["DateTime"]>
+  parent?: InputMaybe<CommentCreateOneInlineInput>
   updatedAt?: InputMaybe<Scalars["DateTime"]>
 }
 
@@ -839,9 +835,25 @@ export type CommentManyWhereInput = {
   OR?: InputMaybe<Array<CommentWhereInput>>
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars["String"]>
-  comments_every?: InputMaybe<CommentWhereInput>
-  comments_none?: InputMaybe<CommentWhereInput>
-  comments_some?: InputMaybe<CommentWhereInput>
+  author?: InputMaybe<Scalars["String"]>
+  /** All values containing the given string. */
+  author_contains?: InputMaybe<Scalars["String"]>
+  /** All values ending with the given string. */
+  author_ends_with?: InputMaybe<Scalars["String"]>
+  /** All values that are contained in given list. */
+  author_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  /** Any other value that exists and is not equal to the given value. */
+  author_not?: InputMaybe<Scalars["String"]>
+  /** All values not containing the given string. */
+  author_not_contains?: InputMaybe<Scalars["String"]>
+  /** All values not ending with the given string */
+  author_not_ends_with?: InputMaybe<Scalars["String"]>
+  /** All values that are not contained in given list. */
+  author_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  /** All values not starting with the given string. */
+  author_not_starts_with?: InputMaybe<Scalars["String"]>
+  /** All values starting with the given string. */
+  author_starts_with?: InputMaybe<Scalars["String"]>
   content?: InputMaybe<Scalars["String"]>
   /** All values containing the given string. */
   content_contains?: InputMaybe<Scalars["String"]>
@@ -901,6 +913,7 @@ export type CommentManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars["ID"]>
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars["ID"]>
+  parent?: InputMaybe<CommentWhereInput>
   publishedAt?: InputMaybe<Scalars["DateTime"]>
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars["DateTime"]>
@@ -943,6 +956,8 @@ export type CommentManyWhereInput = {
 }
 
 export enum CommentOrderByInput {
+  AuthorAsc = "author_ASC",
+  AuthorDesc = "author_DESC",
   ContentAsc = "content_ASC",
   ContentDesc = "content_DESC",
   CreatedAtAsc = "createdAt_ASC",
@@ -956,10 +971,11 @@ export enum CommentOrderByInput {
 }
 
 export type CommentUpdateInput = {
+  author?: InputMaybe<Scalars["String"]>
   clfte6hew2lvq01uo3geddoic?: InputMaybe<PostUpdateManyInlineInput>
-  clfte79qv2i9a01up5wou5fd9?: InputMaybe<CommentUpdateManyInlineInput>
-  comments?: InputMaybe<CommentUpdateManyInlineInput>
+  clftwc3vd37y701unglntb45o?: InputMaybe<CommentUpdateManyInlineInput>
   content?: InputMaybe<Scalars["String"]>
+  parent?: InputMaybe<CommentUpdateOneInlineInput>
 }
 
 export type CommentUpdateManyInlineInput = {
@@ -980,6 +996,7 @@ export type CommentUpdateManyInlineInput = {
 }
 
 export type CommentUpdateManyInput = {
+  author?: InputMaybe<Scalars["String"]>
   content?: InputMaybe<Scalars["String"]>
 }
 
@@ -1042,9 +1059,25 @@ export type CommentWhereInput = {
   OR?: InputMaybe<Array<CommentWhereInput>>
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars["String"]>
-  comments_every?: InputMaybe<CommentWhereInput>
-  comments_none?: InputMaybe<CommentWhereInput>
-  comments_some?: InputMaybe<CommentWhereInput>
+  author?: InputMaybe<Scalars["String"]>
+  /** All values containing the given string. */
+  author_contains?: InputMaybe<Scalars["String"]>
+  /** All values ending with the given string. */
+  author_ends_with?: InputMaybe<Scalars["String"]>
+  /** All values that are contained in given list. */
+  author_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  /** Any other value that exists and is not equal to the given value. */
+  author_not?: InputMaybe<Scalars["String"]>
+  /** All values not containing the given string. */
+  author_not_contains?: InputMaybe<Scalars["String"]>
+  /** All values not ending with the given string */
+  author_not_ends_with?: InputMaybe<Scalars["String"]>
+  /** All values that are not contained in given list. */
+  author_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  /** All values not starting with the given string. */
+  author_not_starts_with?: InputMaybe<Scalars["String"]>
+  /** All values starting with the given string. */
+  author_starts_with?: InputMaybe<Scalars["String"]>
   content?: InputMaybe<Scalars["String"]>
   /** All values containing the given string. */
   content_contains?: InputMaybe<Scalars["String"]>
@@ -1104,6 +1137,7 @@ export type CommentWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars["ID"]>
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars["ID"]>
+  parent?: InputMaybe<CommentWhereInput>
   publishedAt?: InputMaybe<Scalars["DateTime"]>
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars["DateTime"]>
@@ -4224,6 +4258,24 @@ export enum _SystemDateTimeFieldVariation {
   Localization = "localization",
 }
 
+export type ConnectCommentToPostMutationVariables = Exact<{
+  slug: Scalars["String"]
+  commentId: Scalars["ID"]
+}>
+
+export type ConnectCommentToPostMutation = {
+  updatePost?: { id: string } | null
+}
+
+export type CreateCommentMutationVariables = Exact<{
+  author?: InputMaybe<Scalars["String"]>
+  content: Scalars["String"]
+}>
+
+export type CreateCommentMutation = {
+  createComment?: { id: string } | null
+}
+
 export type CreatePostMutationVariables = Exact<{
   title: Scalars["String"]
   slug: Scalars["String"]
@@ -4243,19 +4295,33 @@ export type DeletePostBySlugMutation = {
   deletePost?: { id: string } | null
 }
 
-export type GetPostBySlugQueryVariables = Exact<{
+export type GetPostQueryVariables = Exact<{
   slug: Scalars["String"]
 }>
 
-export type GetPostBySlugQuery = {
+export type GetPostQuery = {
   post?: {
     id: string
     slug: string
     title: string
     content: string
     tags: Array<string>
-    publishedAt?: any | null
+    createdAt: any
     updatedAt: any
+  } | null
+}
+
+export type GetPostCommentsQueryVariables = Exact<{
+  slug: Scalars["String"]
+}>
+
+export type GetPostCommentsQuery = {
+  post?: {
+    comments: Array<{
+      author?: string | null
+      content: string
+      createdAt: any
+    }>
   } | null
 }
 
@@ -4268,6 +4334,14 @@ export type GetPostsQuery = {
     title: string
     content: string
   }>
+}
+
+export type PublishCommentMutationVariables = Exact<{
+  id: Scalars["ID"]
+}>
+
+export type PublishCommentMutation = {
+  publishComment?: { id: string } | null
 }
 
 export type PublishPostMutationVariables = Exact<{
@@ -4296,6 +4370,23 @@ export type UpdatePostBySlugMutation = {
   } | null
 }
 
+export const ConnectCommentToPostDocument = /*#__PURE__*/ gql`
+  mutation ConnectCommentToPost($slug: String!, $commentId: ID!) {
+    updatePost(
+      where: { slug: $slug }
+      data: { comments: { connect: { where: { id: $commentId } } } }
+    ) {
+      id
+    }
+  }
+`
+export const CreateCommentDocument = /*#__PURE__*/ gql`
+  mutation CreateComment($author: String, $content: String!) {
+    createComment(data: { author: $author, content: $content }) {
+      id
+    }
+  }
+`
 export const CreatePostDocument = /*#__PURE__*/ gql`
   mutation CreatePost(
     $title: String!
@@ -4322,16 +4413,27 @@ export const DeletePostBySlugDocument = /*#__PURE__*/ gql`
     }
   }
 `
-export const GetPostBySlugDocument = /*#__PURE__*/ gql`
-  query GetPostBySlug($slug: String!) {
+export const GetPostDocument = /*#__PURE__*/ gql`
+  query GetPost($slug: String!) {
     post(where: { slug: $slug }) {
       id
       slug
       title
       content
       tags
-      publishedAt
+      createdAt
       updatedAt
+    }
+  }
+`
+export const GetPostCommentsDocument = /*#__PURE__*/ gql`
+  query GetPostComments($slug: String!) {
+    post(where: { slug: $slug }) {
+      comments {
+        author
+        content
+        createdAt
+      }
     }
   }
 `
@@ -4342,6 +4444,13 @@ export const GetPostsDocument = /*#__PURE__*/ gql`
       slug
       title
       content
+    }
+  }
+`
+export const PublishCommentDocument = /*#__PURE__*/ gql`
+  mutation PublishComment($id: ID!) {
+    publishComment(where: { id: $id }) {
+      id
     }
   }
 `
@@ -4396,6 +4505,36 @@ export function getSdk(
   withWrapper: SdkFunctionWrapper = defaultWrapper
 ) {
   return {
+    ConnectCommentToPost(
+      variables: ConnectCommentToPostMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<ConnectCommentToPostMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<ConnectCommentToPostMutation>(
+            ConnectCommentToPostDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "ConnectCommentToPost",
+        "mutation"
+      )
+    },
+    CreateComment(
+      variables: CreateCommentMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<CreateCommentMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateCommentMutation>(
+            CreateCommentDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "CreateComment",
+        "mutation"
+      )
+    },
     CreatePost(
       variables: CreatePostMutationVariables,
       requestHeaders?: Dom.RequestInit["headers"]
@@ -4426,18 +4565,32 @@ export function getSdk(
         "mutation"
       )
     },
-    GetPostBySlug(
-      variables: GetPostBySlugQueryVariables,
+    GetPost(
+      variables: GetPostQueryVariables,
       requestHeaders?: Dom.RequestInit["headers"]
-    ): Promise<GetPostBySlugQuery> {
+    ): Promise<GetPostQuery> {
       return withWrapper(
         (wrappedRequestHeaders) =>
-          client.request<GetPostBySlugQuery>(
-            GetPostBySlugDocument,
+          client.request<GetPostQuery>(GetPostDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        "GetPost",
+        "query"
+      )
+    },
+    GetPostComments(
+      variables: GetPostCommentsQueryVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<GetPostCommentsQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetPostCommentsQuery>(
+            GetPostCommentsDocument,
             variables,
             { ...requestHeaders, ...wrappedRequestHeaders }
           ),
-        "GetPostBySlug",
+        "GetPostComments",
         "query"
       )
     },
@@ -4453,6 +4606,21 @@ export function getSdk(
           }),
         "GetPosts",
         "query"
+      )
+    },
+    PublishComment(
+      variables: PublishCommentMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<PublishCommentMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<PublishCommentMutation>(
+            PublishCommentDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "PublishComment",
+        "mutation"
       )
     },
     PublishPost(

@@ -1,0 +1,9 @@
+query GetPostComments($slug: String!) {
+  post(where: { slug: $slug }) {
+    comments {
+      author
+      content
+      createdAt
+    }
+  }
+}

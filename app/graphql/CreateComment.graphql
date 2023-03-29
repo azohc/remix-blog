@@ -1,0 +1,5 @@
+mutation CreateComment($author: String, $content: String!) {
+  createComment(data: { author: $author, content: $content }) {
+    id
+  }
+}

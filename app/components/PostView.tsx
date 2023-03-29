@@ -1,8 +1,21 @@
-import type { GetPostBySlugQuery } from "~/graphql/generated/graphql"
+import { Form } from "@remix-run/react"
 
 interface PostViewProps {
-  post: GetPostBySlugQuery["post"]
+  post: {
+    id: string
+    slug: string
+    title: string
+    content: string
+    tags: Array<string>
+    createdAt?: string
+    updatedAt?: string
+  }
   html: string
+  comments: {
+    author?: string | null | undefined
+    content: string
+    createdAt?: string
+  }[]
 }
 const formatDateTime = (datestr: string) => {
   const date = new Date(datestr)
@@ -16,16 +29,20 @@ const formatDateTime = (datestr: string) => {
     minute: "numeric",
   })}`
 }
-export default function PostView({ post, html }: PostViewProps) {
+export default function PostView({
+  post,
+  html,
+  comments,
+}: PostViewProps) {
   let showUpdatedAt = false
-  let publishedAt = ""
+  let createdAt = ""
   let updatedAt = ""
-  if (post && post.publishedAt && post.updatedAt) {
-    publishedAt = post?.publishedAt as string
-    updatedAt = post?.updatedAt as string
+  if (post && post.createdAt && post.updatedAt) {
+    createdAt = post?.createdAt
+    updatedAt = post?.updatedAt
 
     showUpdatedAt =
-      formatDateTime(publishedAt) !== formatDateTime(updatedAt)
+      formatDateTime(createdAt) !== formatDateTime(updatedAt)
   }
 
   return (
@@ -39,7 +56,7 @@ export default function PostView({ post, html }: PostViewProps) {
             <span key={i}>{tag}</span>
           ))}
         </span>
-        {publishedAt && <span>{formatDateTime(publishedAt)}</span>}
+        {createdAt && <span>{formatDateTime(createdAt)}</span>}
         {showUpdatedAt && (
           <span>
             <span>{formatDateTime(updatedAt)}</span>
@@ -47,6 +64,19 @@ export default function PostView({ post, html }: PostViewProps) {
         )}
       </h2>
       <div dangerouslySetInnerHTML={{ __html: html }} />
+      <section id="comments">
+        <h2>comments</h2>
+        <Form method="post">
+          <label htmlFor="author">Name</label>
+          <input type="text" id="author" name="author" />
+          <label htmlFor="comment">Comment</label>
+          <textarea id="comment" name="comment" required />
+          <button type="submit">Submit</button>
+        </Form>
+        {comments.map((c, i) => (
+          <p key={i}>{JSON.stringify(c)}</p>
+        ))}
+      </section>
     </main>
   )
 }

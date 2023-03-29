@@ -1,0 +1,5 @@
+mutation PublishComment($id: ID!) {
+  publishComment(where: { id: $id }) {
+    id
+  }
+}

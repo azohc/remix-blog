@@ -25,6 +25,7 @@ const handlePutRequest = async (slug: string, request: Request) => {
   const newTitle = formData.get("newTitle")
   const newSlug = formData.get("newSlug")
   const newContent = formData.get("newContent")
+  const newTags = formData.get("newTags")
 
   const errors = {
     title: newTitle ? null : "title is required",
@@ -42,14 +43,14 @@ const handlePutRequest = async (slug: string, request: Request) => {
     typeof newContent === "string",
     "content must be a string"
   )
+  invariant(typeof newTags === "string", "tags must be a string")
 
   const updatedPost = await updatePost({
     slug,
     newSlug,
     newTitle,
     newContent,
-    // TODO tags
-    // newTags
+    newTags: newTags.split(" "),
   })
 
   return redirect(`/posts/${updatedPost.slug}`)
@@ -132,15 +133,21 @@ export default function PostAdmin() {
             required
           />
         </p>
-        <p className="text-right">
-          <button
-            type="submit"
-            className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
-            disabled={isUpdating}
-          >
-            {isUpdating ? "Updating..." : "Update"}
-          </button>
-        </p>
+        <label htmlFor="newTags">Tags:</label>
+        <input
+          type="text"
+          id="newTags"
+          name="newTags"
+          defaultValue={post?.tags}
+          className={inputClassName}
+        />
+        <button
+          type="submit"
+          className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
+          disabled={isUpdating}
+        >
+          {isUpdating ? "Updating..." : "Update"}
+        </button>
       </Form>
       <Form method="delete">
         <button

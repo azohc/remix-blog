@@ -5,5 +5,7 @@ query GetPostBySlug($slug: String!) {
     title
     content
     tags
+    publishedAt
+    updatedAt
   }
 }

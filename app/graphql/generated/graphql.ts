@@ -4254,6 +4254,8 @@ export type GetPostBySlugQuery = {
     title: string
     content: string
     tags: Array<string>
+    publishedAt?: any | null
+    updatedAt: any
   } | null
 }
 
@@ -4328,6 +4330,8 @@ export const GetPostBySlugDocument = /*#__PURE__*/ gql`
       title
       content
       tags
+      publishedAt
+      updatedAt
     }
   }
 `

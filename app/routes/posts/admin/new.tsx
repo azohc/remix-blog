@@ -11,6 +11,7 @@ export const action = async ({ request }: ActionArgs) => {
   const title = formData.get("title")
   const slug = formData.get("slug")
   const content = formData.get("content")
+  const tags = formData.get("tags")
 
   const errors = {
     title: title ? null : "title is required",
@@ -25,11 +26,13 @@ export const action = async ({ request }: ActionArgs) => {
   invariant(typeof title === "string", "title must be a string")
   invariant(typeof slug === "string", "slug must be a string")
   invariant(typeof content === "string", "content must be a string")
+  invariant(typeof tags === "string", "tags must be a string")
 
   await createPost({
     title,
     slug,
     content,
+    tags: tags.split(" "),
   })
 
   return redirect(`/posts/${slug}`)
@@ -89,15 +92,22 @@ export default function NewPost() {
           required
         />
       </p>
-      <p className="text-right">
-        <button
-          type="submit"
-          className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
-          disabled={isCreating}
-        >
-          {isCreating ? "Creating..." : "Create Post"}
-        </button>
+      <p>
+        <label htmlFor="tags">Tags:</label>
+        <input
+          type="text"
+          id="tags"
+          name="tags"
+          className={inputClassName}
+        />
       </p>
+      <button
+        type="submit"
+        className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
+        disabled={isCreating}
+      >
+        {isCreating ? "Creating..." : "Create Post"}
+      </button>
     </Form>
   )
 }

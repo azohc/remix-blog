@@ -3,7 +3,6 @@ import { json } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
 import { Form, useActionData, useNavigation } from "@remix-run/react"
 import invariant from "tiny-invariant"
-
 import { createPost } from "~/models/post.server"
 
 export const action = async ({ request }: ActionArgs) => {
@@ -75,7 +74,7 @@ export default function NewPost() {
         </label>
       </p>
       <p>
-        <label htmlFor="markdown">
+        <label htmlFor="content">
           Markdown:{" "}
           {errors?.content ? (
             <em className="text-red-600">{errors.content}</em>

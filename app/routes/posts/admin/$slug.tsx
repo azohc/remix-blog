@@ -22,9 +22,9 @@ export const loader = async ({ params }: LoaderArgs) => {
 const handlePutRequest = async (slug: string, request: Request) => {
   const formData = await request.formData()
 
-  const newTitle = formData.get("title")
-  const newSlug = formData.get("slug")
-  const newContent = formData.get("content")
+  const newTitle = formData.get("newTitle")
+  const newSlug = formData.get("newSlug")
+  const newContent = formData.get("newContent")
 
   const errors = {
     title: newTitle ? null : "title is required",
@@ -43,7 +43,7 @@ const handlePutRequest = async (slug: string, request: Request) => {
     "content must be a string"
   )
 
-  await updatePost({
+  const updatedPost = await updatePost({
     slug,
     newSlug,
     newTitle,
@@ -52,11 +52,13 @@ const handlePutRequest = async (slug: string, request: Request) => {
     // newTags
   })
 
-  return redirect(`/posts/${slug}`)
+  return redirect(`/posts/${updatedPost.slug}`)
 }
 
 const handleDeleteRequest = async (slug: string) => {
+  console.log("deleting")
   await deletePost({ slug })
+
   return redirect("/posts")
 }
 
@@ -84,14 +86,14 @@ export default function PostAdmin() {
     <>
       <Form method="put">
         <p>
-          <label>
+          <label htmlFor="newTitle">
             Post Title:{" "}
             {errors?.title ? (
               <em className="text-red-600">{errors.title}</em>
             ) : null}
             <input
               type="text"
-              name="title"
+              name="newTitle"
               defaultValue={post?.title}
               className={inputClassName}
               required
@@ -99,14 +101,14 @@ export default function PostAdmin() {
           </label>
         </p>
         <p>
-          <label>
+          <label htmlFor="newSlug">
             Post Slug:{" "}
             {errors?.slug ? (
               <em className="text-red-600">{errors.slug}</em>
             ) : null}
             <input
               type="text"
-              name="slug"
+              name="newSlug"
               defaultValue={post?.slug}
               className={inputClassName}
               required
@@ -114,7 +116,7 @@ export default function PostAdmin() {
           </label>
         </p>
         <p>
-          <label htmlFor="markdown">
+          <label htmlFor="newContent">
             Markdown:{" "}
             {errors?.content ? (
               <em className="text-red-600">{errors.content}</em>

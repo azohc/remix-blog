@@ -6,6 +6,7 @@ export const GRAPHQL_ENDPOINT =
 export const gql = new GraphQLClient(GRAPHQL_ENDPOINT, {
   headers: {
     "Content-Type": "application/json",
+    // "Cache-Control": "max-age=0, s-maxage=0",
   },
 })
 
@@ -16,5 +17,4 @@ if (!token) {
 } else {
   console.debug("Loaded auth token from HYGRAPH_AUTH_TOKEN")
   gql.setHeader("Authorization", "Bearer " + token)
-  console.debug("Set headers", gql.requestConfig.headers)
 }

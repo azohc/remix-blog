@@ -4268,6 +4268,14 @@ export type GetPostsQuery = {
   }>
 }
 
+export type PublishPostMutationVariables = Exact<{
+  id?: InputMaybe<Scalars["ID"]>
+}>
+
+export type PublishPostMutation = {
+  publishPost?: { id: string; slug: string } | null
+}
+
 export type UpdatePostBySlugMutationVariables = Exact<{
   slug: Scalars["String"]
   newSlug?: InputMaybe<Scalars["String"]>
@@ -4330,6 +4338,14 @@ export const GetPostsDocument = /*#__PURE__*/ gql`
       slug
       title
       content
+    }
+  }
+`
+export const PublishPostDocument = /*#__PURE__*/ gql`
+  mutation PublishPost($id: ID) {
+    publishPost(where: { id: $id }) {
+      id
+      slug
     }
   }
 `
@@ -4433,6 +4449,21 @@ export function getSdk(
           }),
         "GetPosts",
         "query"
+      )
+    },
+    PublishPost(
+      variables?: PublishPostMutationVariables,
+      requestHeaders?: Dom.RequestInit["headers"]
+    ): Promise<PublishPostMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<PublishPostMutation>(
+            PublishPostDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "PublishPost",
+        "mutation"
       )
     },
     UpdatePostBySlug(

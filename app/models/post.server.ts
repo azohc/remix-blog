@@ -6,13 +6,11 @@ import type {
   GetPostBySlugQuery,
   GetPostBySlugQueryVariables,
   GetPostsQuery,
-  PublishPostMutation,
   UpdatePostBySlugMutation,
   UpdatePostBySlugMutationVariables,
 } from "~/graphql/generated/graphql"
 import { DeletePostBySlugDocument } from "~/graphql/generated/graphql"
 import { UpdatePostBySlugDocument } from "~/graphql/generated/graphql"
-import { PublishPostDocument } from "~/graphql/generated/graphql"
 import { CreatePostDocument } from "~/graphql/generated/graphql"
 import { GetPostBySlugDocument } from "~/graphql/generated/graphql"
 import { GetPostsDocument } from "~/graphql/generated/graphql"
@@ -34,9 +32,6 @@ export async function createPost(vars: CreatePostMutationVariables) {
   if (!createPost) {
     throw new Error("an error ocurred while creating the post")
   }
-  return gql.request<PublishPostMutation>(PublishPostDocument, {
-    id: createPost?.id,
-  })
 }
 
 export async function updatePost(
@@ -49,9 +44,6 @@ export async function updatePost(
   if (!updatePost) {
     throw new Error("an error occurred while updating the post")
   }
-  await gql.request<PublishPostMutation>(PublishPostDocument, {
-    id: updatePost.id,
-  })
 
   return updatePost
 }

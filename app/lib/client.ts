@@ -8,3 +8,13 @@ export const gql = new GraphQLClient(GRAPHQL_ENDPOINT, {
     "Content-Type": "application/json",
   },
 })
+
+const token = process.env.HYGRAPH_AUTH_TOKEN
+
+if (!token) {
+  console.warn("Failed to load auth token from HYGRAPH_AUTH_TOKEN")
+} else {
+  console.debug("Loaded auth token from HYGRAPH_AUTH_TOKEN")
+  gql.setHeader("Authorization", "Bearer " + token)
+  console.debug("Set headers", gql.requestConfig.headers)
+}

@@ -706,6 +706,464 @@ export type ColorInput = {
   rgba?: InputMaybe<RgbaInput>
 }
 
+export type Comment = Node & {
+  comments: Array<Comment>
+  content: Scalars["String"]
+  /** The time the document was created */
+  createdAt: Scalars["DateTime"]
+  /** User that created this document */
+  createdBy?: Maybe<User>
+  /** Get the document in other stages */
+  documentInStages: Array<Comment>
+  /** List of Comment versions */
+  history: Array<Version>
+  /** The unique identifier */
+  id: Scalars["ID"]
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars["DateTime"]>
+  /** User that last published this document */
+  publishedBy?: Maybe<User>
+  scheduledIn: Array<ScheduledOperation>
+  /** System stage field */
+  stage: Stage
+  /** The time the document was updated */
+  updatedAt: Scalars["DateTime"]
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>
+}
+
+export type CommentCommentsArgs = {
+  after?: InputMaybe<Scalars["String"]>
+  before?: InputMaybe<Scalars["String"]>
+  first?: InputMaybe<Scalars["Int"]>
+  forceParentLocale?: InputMaybe<Scalars["Boolean"]>
+  last?: InputMaybe<Scalars["Int"]>
+  locales?: InputMaybe<Array<Locale>>
+  orderBy?: InputMaybe<CommentOrderByInput>
+  skip?: InputMaybe<Scalars["Int"]>
+  where?: InputMaybe<CommentWhereInput>
+}
+
+export type CommentCreatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars["Boolean"]>
+  locales?: InputMaybe<Array<Locale>>
+}
+
+export type CommentDocumentInStagesArgs = {
+  includeCurrent?: Scalars["Boolean"]
+  inheritLocale?: Scalars["Boolean"]
+  stages?: Array<Stage>
+}
+
+export type CommentHistoryArgs = {
+  limit?: Scalars["Int"]
+  skip?: Scalars["Int"]
+  stageOverride?: InputMaybe<Stage>
+}
+
+export type CommentPublishedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars["Boolean"]>
+  locales?: InputMaybe<Array<Locale>>
+}
+
+export type CommentScheduledInArgs = {
+  after?: InputMaybe<Scalars["String"]>
+  before?: InputMaybe<Scalars["String"]>
+  first?: InputMaybe<Scalars["Int"]>
+  forceParentLocale?: InputMaybe<Scalars["Boolean"]>
+  last?: InputMaybe<Scalars["Int"]>
+  locales?: InputMaybe<Array<Locale>>
+  skip?: InputMaybe<Scalars["Int"]>
+  where?: InputMaybe<ScheduledOperationWhereInput>
+}
+
+export type CommentUpdatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars["Boolean"]>
+  locales?: InputMaybe<Array<Locale>>
+}
+
+export type CommentConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>
+  /** Document to connect */
+  where: CommentWhereUniqueInput
+}
+
+/** A connection to a list of items. */
+export type CommentConnection = {
+  aggregate: Aggregate
+  /** A list of edges. */
+  edges: Array<CommentEdge>
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo
+}
+
+export type CommentCreateInput = {
+  clfte6hew2lvq01uo3geddoic?: InputMaybe<PostCreateManyInlineInput>
+  clfte79qv2i9a01up5wou5fd9?: InputMaybe<CommentCreateManyInlineInput>
+  comments?: InputMaybe<CommentCreateManyInlineInput>
+  content: Scalars["String"]
+  createdAt?: InputMaybe<Scalars["DateTime"]>
+  updatedAt?: InputMaybe<Scalars["DateTime"]>
+}
+
+export type CommentCreateManyInlineInput = {
+  /** Connect multiple existing Comment documents */
+  connect?: InputMaybe<Array<CommentWhereUniqueInput>>
+  /** Create and connect multiple existing Comment documents */
+  create?: InputMaybe<Array<CommentCreateInput>>
+}
+
+export type CommentCreateOneInlineInput = {
+  /** Connect one existing Comment document */
+  connect?: InputMaybe<CommentWhereUniqueInput>
+  /** Create and connect one Comment document */
+  create?: InputMaybe<CommentCreateInput>
+}
+
+/** An edge in a connection. */
+export type CommentEdge = {
+  /** A cursor for use in pagination. */
+  cursor: Scalars["String"]
+  /** The item at the end of the edge. */
+  node: Comment
+}
+
+/** Identifies documents */
+export type CommentManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<CommentWhereInput>>
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<CommentWhereInput>>
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<CommentWhereInput>>
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars["String"]>
+  comments_every?: InputMaybe<CommentWhereInput>
+  comments_none?: InputMaybe<CommentWhereInput>
+  comments_some?: InputMaybe<CommentWhereInput>
+  content?: InputMaybe<Scalars["String"]>
+  /** All values containing the given string. */
+  content_contains?: InputMaybe<Scalars["String"]>
+  /** All values ending with the given string. */
+  content_ends_with?: InputMaybe<Scalars["String"]>
+  /** All values that are contained in given list. */
+  content_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  /** Any other value that exists and is not equal to the given value. */
+  content_not?: InputMaybe<Scalars["String"]>
+  /** All values not containing the given string. */
+  content_not_contains?: InputMaybe<Scalars["String"]>
+  /** All values not ending with the given string */
+  content_not_ends_with?: InputMaybe<Scalars["String"]>
+  /** All values that are not contained in given list. */
+  content_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  /** All values not starting with the given string. */
+  content_not_starts_with?: InputMaybe<Scalars["String"]>
+  /** All values starting with the given string. */
+  content_starts_with?: InputMaybe<Scalars["String"]>
+  createdAt?: InputMaybe<Scalars["DateTime"]>
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars["DateTime"]>
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars["DateTime"]>
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars["DateTime"]>>>
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars["DateTime"]>
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars["DateTime"]>
+  /** Any other value that exists and is not equal to the given value. */
+  createdAt_not?: InputMaybe<Scalars["DateTime"]>
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<
+    Array<InputMaybe<Scalars["DateTime"]>>
+  >
+  createdBy?: InputMaybe<UserWhereInput>
+  documentInStages_every?: InputMaybe<CommentWhereStageInput>
+  documentInStages_none?: InputMaybe<CommentWhereStageInput>
+  documentInStages_some?: InputMaybe<CommentWhereStageInput>
+  id?: InputMaybe<Scalars["ID"]>
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars["ID"]>
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars["ID"]>
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars["ID"]>
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars["ID"]>
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars["ID"]>
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars["ID"]>
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars["ID"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]>
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars["DateTime"]>
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars["DateTime"]>
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars["DateTime"]>>>
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars["DateTime"]>
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars["DateTime"]>
+  /** Any other value that exists and is not equal to the given value. */
+  publishedAt_not?: InputMaybe<Scalars["DateTime"]>
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<
+    Array<InputMaybe<Scalars["DateTime"]>>
+  >
+  publishedBy?: InputMaybe<UserWhereInput>
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>
+  updatedAt?: InputMaybe<Scalars["DateTime"]>
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars["DateTime"]>
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars["DateTime"]>
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars["DateTime"]>>>
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars["DateTime"]>
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars["DateTime"]>
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars["DateTime"]>
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<
+    Array<InputMaybe<Scalars["DateTime"]>>
+  >
+  updatedBy?: InputMaybe<UserWhereInput>
+}
+
+export enum CommentOrderByInput {
+  ContentAsc = "content_ASC",
+  ContentDesc = "content_DESC",
+  CreatedAtAsc = "createdAt_ASC",
+  CreatedAtDesc = "createdAt_DESC",
+  IdAsc = "id_ASC",
+  IdDesc = "id_DESC",
+  PublishedAtAsc = "publishedAt_ASC",
+  PublishedAtDesc = "publishedAt_DESC",
+  UpdatedAtAsc = "updatedAt_ASC",
+  UpdatedAtDesc = "updatedAt_DESC",
+}
+
+export type CommentUpdateInput = {
+  clfte6hew2lvq01uo3geddoic?: InputMaybe<PostUpdateManyInlineInput>
+  clfte79qv2i9a01up5wou5fd9?: InputMaybe<CommentUpdateManyInlineInput>
+  comments?: InputMaybe<CommentUpdateManyInlineInput>
+  content?: InputMaybe<Scalars["String"]>
+}
+
+export type CommentUpdateManyInlineInput = {
+  /** Connect multiple existing Comment documents */
+  connect?: InputMaybe<Array<CommentConnectInput>>
+  /** Create and connect multiple Comment documents */
+  create?: InputMaybe<Array<CommentCreateInput>>
+  /** Delete multiple Comment documents */
+  delete?: InputMaybe<Array<CommentWhereUniqueInput>>
+  /** Disconnect multiple Comment documents */
+  disconnect?: InputMaybe<Array<CommentWhereUniqueInput>>
+  /** Override currently-connected documents with multiple existing Comment documents */
+  set?: InputMaybe<Array<CommentWhereUniqueInput>>
+  /** Update multiple Comment documents */
+  update?: InputMaybe<Array<CommentUpdateWithNestedWhereUniqueInput>>
+  /** Upsert multiple Comment documents */
+  upsert?: InputMaybe<Array<CommentUpsertWithNestedWhereUniqueInput>>
+}
+
+export type CommentUpdateManyInput = {
+  content?: InputMaybe<Scalars["String"]>
+}
+
+export type CommentUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: CommentUpdateManyInput
+  /** Document search */
+  where: CommentWhereInput
+}
+
+export type CommentUpdateOneInlineInput = {
+  /** Connect existing Comment document */
+  connect?: InputMaybe<CommentWhereUniqueInput>
+  /** Create and connect one Comment document */
+  create?: InputMaybe<CommentCreateInput>
+  /** Delete currently connected Comment document */
+  delete?: InputMaybe<Scalars["Boolean"]>
+  /** Disconnect currently connected Comment document */
+  disconnect?: InputMaybe<Scalars["Boolean"]>
+  /** Update single Comment document */
+  update?: InputMaybe<CommentUpdateWithNestedWhereUniqueInput>
+  /** Upsert single Comment document */
+  upsert?: InputMaybe<CommentUpsertWithNestedWhereUniqueInput>
+}
+
+export type CommentUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: CommentUpdateInput
+  /** Unique document search */
+  where: CommentWhereUniqueInput
+}
+
+export type CommentUpsertInput = {
+  /** Create document if it didn't exist */
+  create: CommentCreateInput
+  /** Update document if it exists */
+  update: CommentUpdateInput
+}
+
+export type CommentUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: CommentUpsertInput
+  /** Unique document search */
+  where: CommentWhereUniqueInput
+}
+
+/** This contains a set of filters that can be used to compare values internally */
+export type CommentWhereComparatorInput = {
+  /** This field can be used to request to check if the entry is outdated by internal comparison */
+  outdated_to?: InputMaybe<Scalars["Boolean"]>
+}
+
+/** Identifies documents */
+export type CommentWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<CommentWhereInput>>
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<CommentWhereInput>>
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<CommentWhereInput>>
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars["String"]>
+  comments_every?: InputMaybe<CommentWhereInput>
+  comments_none?: InputMaybe<CommentWhereInput>
+  comments_some?: InputMaybe<CommentWhereInput>
+  content?: InputMaybe<Scalars["String"]>
+  /** All values containing the given string. */
+  content_contains?: InputMaybe<Scalars["String"]>
+  /** All values ending with the given string. */
+  content_ends_with?: InputMaybe<Scalars["String"]>
+  /** All values that are contained in given list. */
+  content_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  /** Any other value that exists and is not equal to the given value. */
+  content_not?: InputMaybe<Scalars["String"]>
+  /** All values not containing the given string. */
+  content_not_contains?: InputMaybe<Scalars["String"]>
+  /** All values not ending with the given string */
+  content_not_ends_with?: InputMaybe<Scalars["String"]>
+  /** All values that are not contained in given list. */
+  content_not_in?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  /** All values not starting with the given string. */
+  content_not_starts_with?: InputMaybe<Scalars["String"]>
+  /** All values starting with the given string. */
+  content_starts_with?: InputMaybe<Scalars["String"]>
+  createdAt?: InputMaybe<Scalars["DateTime"]>
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars["DateTime"]>
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars["DateTime"]>
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars["DateTime"]>>>
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars["DateTime"]>
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars["DateTime"]>
+  /** Any other value that exists and is not equal to the given value. */
+  createdAt_not?: InputMaybe<Scalars["DateTime"]>
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<
+    Array<InputMaybe<Scalars["DateTime"]>>
+  >
+  createdBy?: InputMaybe<UserWhereInput>
+  documentInStages_every?: InputMaybe<CommentWhereStageInput>
+  documentInStages_none?: InputMaybe<CommentWhereStageInput>
+  documentInStages_some?: InputMaybe<CommentWhereStageInput>
+  id?: InputMaybe<Scalars["ID"]>
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars["ID"]>
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars["ID"]>
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars["ID"]>
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars["ID"]>
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars["ID"]>
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars["ID"]>
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars["ID"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]>
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars["DateTime"]>
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars["DateTime"]>
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars["DateTime"]>>>
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars["DateTime"]>
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars["DateTime"]>
+  /** Any other value that exists and is not equal to the given value. */
+  publishedAt_not?: InputMaybe<Scalars["DateTime"]>
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<
+    Array<InputMaybe<Scalars["DateTime"]>>
+  >
+  publishedBy?: InputMaybe<UserWhereInput>
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>
+  updatedAt?: InputMaybe<Scalars["DateTime"]>
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars["DateTime"]>
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars["DateTime"]>
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars["DateTime"]>>>
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars["DateTime"]>
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars["DateTime"]>
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars["DateTime"]>
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<
+    Array<InputMaybe<Scalars["DateTime"]>>
+  >
+  updatedBy?: InputMaybe<UserWhereInput>
+}
+
+/** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
+export type CommentWhereStageInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<CommentWhereStageInput>>
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<CommentWhereStageInput>>
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<CommentWhereStageInput>>
+  /** This field contains fields which can be set as true or false to specify an internal comparison */
+  compareWithParent?: InputMaybe<CommentWhereComparatorInput>
+  /** Specify the stage to compare with */
+  stage?: InputMaybe<Stage>
+}
+
+/** References Comment record uniquely */
+export type CommentWhereUniqueInput = {
+  id?: InputMaybe<Scalars["ID"]>
+}
+
 export type ConnectPositionInput = {
   /** Connect document after specified document */
   after?: InputMaybe<Scalars["ID"]>
@@ -836,12 +1294,16 @@ export type Mutation = {
    * @deprecated Asset mutations will be overhauled soon
    */
   createAsset?: Maybe<Asset>
+  /** Create one comment */
+  createComment?: Maybe<Comment>
   /** Create one post */
   createPost?: Maybe<Post>
   /** Create one scheduledRelease */
   createScheduledRelease?: Maybe<ScheduledRelease>
   /** Delete one asset from _all_ existing stages. Returns deleted document. */
   deleteAsset?: Maybe<Asset>
+  /** Delete one comment from _all_ existing stages. Returns deleted document. */
+  deleteComment?: Maybe<Comment>
   /**
    * Delete many Asset documents
    * @deprecated Please use the new paginated many mutation (deleteManyAssetsConnection)
@@ -849,6 +1311,13 @@ export type Mutation = {
   deleteManyAssets: BatchPayload
   /** Delete many Asset documents, return deleted documents */
   deleteManyAssetsConnection: AssetConnection
+  /**
+   * Delete many Comment documents
+   * @deprecated Please use the new paginated many mutation (deleteManyCommentsConnection)
+   */
+  deleteManyComments: BatchPayload
+  /** Delete many Comment documents, return deleted documents */
+  deleteManyCommentsConnection: CommentConnection
   /**
    * Delete many Post documents
    * @deprecated Please use the new paginated many mutation (deleteManyPostsConnection)
@@ -864,6 +1333,8 @@ export type Mutation = {
   deleteScheduledRelease?: Maybe<ScheduledRelease>
   /** Publish one asset */
   publishAsset?: Maybe<Asset>
+  /** Publish one comment */
+  publishComment?: Maybe<Comment>
   /**
    * Publish many Asset documents
    * @deprecated Please use the new paginated many mutation (publishManyAssetsConnection)
@@ -871,6 +1342,13 @@ export type Mutation = {
   publishManyAssets: BatchPayload
   /** Publish many Asset documents */
   publishManyAssetsConnection: AssetConnection
+  /**
+   * Publish many Comment documents
+   * @deprecated Please use the new paginated many mutation (publishManyCommentsConnection)
+   */
+  publishManyComments: BatchPayload
+  /** Publish many Comment documents */
+  publishManyCommentsConnection: CommentConnection
   /**
    * Publish many Post documents
    * @deprecated Please use the new paginated many mutation (publishManyPostsConnection)
@@ -882,14 +1360,20 @@ export type Mutation = {
   publishPost?: Maybe<Post>
   /** Schedule to publish one asset */
   schedulePublishAsset?: Maybe<Asset>
+  /** Schedule to publish one comment */
+  schedulePublishComment?: Maybe<Comment>
   /** Schedule to publish one post */
   schedulePublishPost?: Maybe<Post>
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishAsset?: Maybe<Asset>
+  /** Unpublish one comment from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishComment?: Maybe<Comment>
   /** Unpublish one post from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishPost?: Maybe<Post>
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishAsset?: Maybe<Asset>
+  /** Unpublish one comment from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishComment?: Maybe<Comment>
   /**
    * Unpublish many Asset documents
    * @deprecated Please use the new paginated many mutation (unpublishManyAssetsConnection)
@@ -897,6 +1381,13 @@ export type Mutation = {
   unpublishManyAssets: BatchPayload
   /** Find many Asset documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyAssetsConnection: AssetConnection
+  /**
+   * Unpublish many Comment documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyCommentsConnection)
+   */
+  unpublishManyComments: BatchPayload
+  /** Find many Comment documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyCommentsConnection: CommentConnection
   /**
    * Unpublish many Post documents
    * @deprecated Please use the new paginated many mutation (unpublishManyPostsConnection)
@@ -908,6 +1399,8 @@ export type Mutation = {
   unpublishPost?: Maybe<Post>
   /** Update one asset */
   updateAsset?: Maybe<Asset>
+  /** Update one comment */
+  updateComment?: Maybe<Comment>
   /**
    * Update many assets
    * @deprecated Please use the new paginated many mutation (updateManyAssetsConnection)
@@ -915,6 +1408,13 @@ export type Mutation = {
   updateManyAssets: BatchPayload
   /** Update many Asset documents */
   updateManyAssetsConnection: AssetConnection
+  /**
+   * Update many comments
+   * @deprecated Please use the new paginated many mutation (updateManyCommentsConnection)
+   */
+  updateManyComments: BatchPayload
+  /** Update many Comment documents */
+  updateManyCommentsConnection: CommentConnection
   /**
    * Update many posts
    * @deprecated Please use the new paginated many mutation (updateManyPostsConnection)
@@ -928,12 +1428,18 @@ export type Mutation = {
   updateScheduledRelease?: Maybe<ScheduledRelease>
   /** Upsert one asset */
   upsertAsset?: Maybe<Asset>
+  /** Upsert one comment */
+  upsertComment?: Maybe<Comment>
   /** Upsert one post */
   upsertPost?: Maybe<Post>
 }
 
 export type MutationCreateAssetArgs = {
   data: AssetCreateInput
+}
+
+export type MutationCreateCommentArgs = {
+  data: CommentCreateInput
 }
 
 export type MutationCreatePostArgs = {
@@ -948,6 +1454,10 @@ export type MutationDeleteAssetArgs = {
   where: AssetWhereUniqueInput
 }
 
+export type MutationDeleteCommentArgs = {
+  where: CommentWhereUniqueInput
+}
+
 export type MutationDeleteManyAssetsArgs = {
   where?: InputMaybe<AssetManyWhereInput>
 }
@@ -959,6 +1469,19 @@ export type MutationDeleteManyAssetsConnectionArgs = {
   last?: InputMaybe<Scalars["Int"]>
   skip?: InputMaybe<Scalars["Int"]>
   where?: InputMaybe<AssetManyWhereInput>
+}
+
+export type MutationDeleteManyCommentsArgs = {
+  where?: InputMaybe<CommentManyWhereInput>
+}
+
+export type MutationDeleteManyCommentsConnectionArgs = {
+  after?: InputMaybe<Scalars["ID"]>
+  before?: InputMaybe<Scalars["ID"]>
+  first?: InputMaybe<Scalars["Int"]>
+  last?: InputMaybe<Scalars["Int"]>
+  skip?: InputMaybe<Scalars["Int"]>
+  where?: InputMaybe<CommentManyWhereInput>
 }
 
 export type MutationDeleteManyPostsArgs = {
@@ -994,6 +1517,11 @@ export type MutationPublishAssetArgs = {
   withDefaultLocale?: InputMaybe<Scalars["Boolean"]>
 }
 
+export type MutationPublishCommentArgs = {
+  to?: Array<Stage>
+  where: CommentWhereUniqueInput
+}
+
 export type MutationPublishManyAssetsArgs = {
   locales?: InputMaybe<Array<Locale>>
   publishBase?: InputMaybe<Scalars["Boolean"]>
@@ -1014,6 +1542,22 @@ export type MutationPublishManyAssetsConnectionArgs = {
   to?: Array<Stage>
   where?: InputMaybe<AssetManyWhereInput>
   withDefaultLocale?: InputMaybe<Scalars["Boolean"]>
+}
+
+export type MutationPublishManyCommentsArgs = {
+  to?: Array<Stage>
+  where?: InputMaybe<CommentManyWhereInput>
+}
+
+export type MutationPublishManyCommentsConnectionArgs = {
+  after?: InputMaybe<Scalars["ID"]>
+  before?: InputMaybe<Scalars["ID"]>
+  first?: InputMaybe<Scalars["Int"]>
+  from?: InputMaybe<Stage>
+  last?: InputMaybe<Scalars["Int"]>
+  skip?: InputMaybe<Scalars["Int"]>
+  to?: Array<Stage>
+  where?: InputMaybe<CommentManyWhereInput>
 }
 
 export type MutationPublishManyPostsArgs = {
@@ -1047,6 +1591,13 @@ export type MutationSchedulePublishAssetArgs = {
   withDefaultLocale?: InputMaybe<Scalars["Boolean"]>
 }
 
+export type MutationSchedulePublishCommentArgs = {
+  releaseAt?: InputMaybe<Scalars["DateTime"]>
+  releaseId?: InputMaybe<Scalars["String"]>
+  to?: Array<Stage>
+  where: CommentWhereUniqueInput
+}
+
 export type MutationSchedulePublishPostArgs = {
   releaseAt?: InputMaybe<Scalars["DateTime"]>
   releaseId?: InputMaybe<Scalars["String"]>
@@ -1063,6 +1614,13 @@ export type MutationScheduleUnpublishAssetArgs = {
   where: AssetWhereUniqueInput
 }
 
+export type MutationScheduleUnpublishCommentArgs = {
+  from?: Array<Stage>
+  releaseAt?: InputMaybe<Scalars["DateTime"]>
+  releaseId?: InputMaybe<Scalars["String"]>
+  where: CommentWhereUniqueInput
+}
+
 export type MutationScheduleUnpublishPostArgs = {
   from?: Array<Stage>
   releaseAt?: InputMaybe<Scalars["DateTime"]>
@@ -1075,6 +1633,11 @@ export type MutationUnpublishAssetArgs = {
   locales?: InputMaybe<Array<Locale>>
   unpublishBase?: InputMaybe<Scalars["Boolean"]>
   where: AssetWhereUniqueInput
+}
+
+export type MutationUnpublishCommentArgs = {
+  from?: Array<Stage>
+  where: CommentWhereUniqueInput
 }
 
 export type MutationUnpublishManyAssetsArgs = {
@@ -1095,6 +1658,22 @@ export type MutationUnpublishManyAssetsConnectionArgs = {
   stage?: InputMaybe<Stage>
   unpublishBase?: InputMaybe<Scalars["Boolean"]>
   where?: InputMaybe<AssetManyWhereInput>
+}
+
+export type MutationUnpublishManyCommentsArgs = {
+  from?: Array<Stage>
+  where?: InputMaybe<CommentManyWhereInput>
+}
+
+export type MutationUnpublishManyCommentsConnectionArgs = {
+  after?: InputMaybe<Scalars["ID"]>
+  before?: InputMaybe<Scalars["ID"]>
+  first?: InputMaybe<Scalars["Int"]>
+  from?: Array<Stage>
+  last?: InputMaybe<Scalars["Int"]>
+  skip?: InputMaybe<Scalars["Int"]>
+  stage?: InputMaybe<Stage>
+  where?: InputMaybe<CommentManyWhereInput>
 }
 
 export type MutationUnpublishManyPostsArgs = {
@@ -1123,6 +1702,11 @@ export type MutationUpdateAssetArgs = {
   where: AssetWhereUniqueInput
 }
 
+export type MutationUpdateCommentArgs = {
+  data: CommentUpdateInput
+  where: CommentWhereUniqueInput
+}
+
 export type MutationUpdateManyAssetsArgs = {
   data: AssetUpdateManyInput
   where?: InputMaybe<AssetManyWhereInput>
@@ -1136,6 +1720,21 @@ export type MutationUpdateManyAssetsConnectionArgs = {
   last?: InputMaybe<Scalars["Int"]>
   skip?: InputMaybe<Scalars["Int"]>
   where?: InputMaybe<AssetManyWhereInput>
+}
+
+export type MutationUpdateManyCommentsArgs = {
+  data: CommentUpdateManyInput
+  where?: InputMaybe<CommentManyWhereInput>
+}
+
+export type MutationUpdateManyCommentsConnectionArgs = {
+  after?: InputMaybe<Scalars["ID"]>
+  before?: InputMaybe<Scalars["ID"]>
+  data: CommentUpdateManyInput
+  first?: InputMaybe<Scalars["Int"]>
+  last?: InputMaybe<Scalars["Int"]>
+  skip?: InputMaybe<Scalars["Int"]>
+  where?: InputMaybe<CommentManyWhereInput>
 }
 
 export type MutationUpdateManyPostsArgs = {
@@ -1168,6 +1767,11 @@ export type MutationUpsertAssetArgs = {
   where: AssetWhereUniqueInput
 }
 
+export type MutationUpsertCommentArgs = {
+  upsert: CommentUpsertInput
+  where: CommentWhereUniqueInput
+}
+
 export type MutationUpsertPostArgs = {
   upsert: PostUpsertInput
   where: PostWhereUniqueInput
@@ -1196,6 +1800,7 @@ export type PageInfo = {
 }
 
 export type Post = Node & {
+  comments: Array<Comment>
   content: Scalars["String"]
   /** The time the document was created */
   createdAt: Scalars["DateTime"]
@@ -1221,6 +1826,18 @@ export type Post = Node & {
   updatedAt: Scalars["DateTime"]
   /** User that last updated this document */
   updatedBy?: Maybe<User>
+}
+
+export type PostCommentsArgs = {
+  after?: InputMaybe<Scalars["String"]>
+  before?: InputMaybe<Scalars["String"]>
+  first?: InputMaybe<Scalars["Int"]>
+  forceParentLocale?: InputMaybe<Scalars["Boolean"]>
+  last?: InputMaybe<Scalars["Int"]>
+  locales?: InputMaybe<Array<Locale>>
+  orderBy?: InputMaybe<CommentOrderByInput>
+  skip?: InputMaybe<Scalars["Int"]>
+  where?: InputMaybe<CommentWhereInput>
 }
 
 export type PostCreatedByArgs = {
@@ -1278,6 +1895,7 @@ export type PostConnection = {
 }
 
 export type PostCreateInput = {
+  comments?: InputMaybe<CommentCreateManyInlineInput>
   content: Scalars["String"]
   createdAt?: InputMaybe<Scalars["DateTime"]>
   slug: Scalars["String"]
@@ -1318,6 +1936,9 @@ export type PostManyWhereInput = {
   OR?: InputMaybe<Array<PostWhereInput>>
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars["String"]>
+  comments_every?: InputMaybe<CommentWhereInput>
+  comments_none?: InputMaybe<CommentWhereInput>
+  comments_some?: InputMaybe<CommentWhereInput>
   content?: InputMaybe<Scalars["String"]>
   /** All values containing the given string. */
   content_contains?: InputMaybe<Scalars["String"]>
@@ -1486,6 +2107,7 @@ export enum PostOrderByInput {
 }
 
 export type PostUpdateInput = {
+  comments?: InputMaybe<CommentUpdateManyInlineInput>
   content?: InputMaybe<Scalars["String"]>
   slug?: InputMaybe<Scalars["String"]>
   tags?: InputMaybe<Array<Scalars["String"]>>
@@ -1574,6 +2196,9 @@ export type PostWhereInput = {
   OR?: InputMaybe<Array<PostWhereInput>>
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars["String"]>
+  comments_every?: InputMaybe<CommentWhereInput>
+  comments_none?: InputMaybe<CommentWhereInput>
+  comments_some?: InputMaybe<CommentWhereInput>
   content?: InputMaybe<Scalars["String"]>
   /** All values containing the given string. */
   content_contains?: InputMaybe<Scalars["String"]>
@@ -1758,6 +2383,14 @@ export type Query = {
   assets: Array<Asset>
   /** Retrieve multiple assets using the Relay connection interface */
   assetsConnection: AssetConnection
+  /** Retrieve a single comment */
+  comment?: Maybe<Comment>
+  /** Retrieve document version */
+  commentVersion?: Maybe<DocumentVersion>
+  /** Retrieve multiple comments */
+  comments: Array<Comment>
+  /** Retrieve multiple comments using the Relay connection interface */
+  commentsConnection: CommentConnection
   /** Fetches an object given its ID */
   node?: Maybe<Node>
   /** Retrieve a single post */
@@ -1820,6 +2453,40 @@ export type QueryAssetsConnectionArgs = {
   skip?: InputMaybe<Scalars["Int"]>
   stage?: Stage
   where?: InputMaybe<AssetWhereInput>
+}
+
+export type QueryCommentArgs = {
+  locales?: Array<Locale>
+  stage?: Stage
+  where: CommentWhereUniqueInput
+}
+
+export type QueryCommentVersionArgs = {
+  where: VersionWhereInput
+}
+
+export type QueryCommentsArgs = {
+  after?: InputMaybe<Scalars["String"]>
+  before?: InputMaybe<Scalars["String"]>
+  first?: InputMaybe<Scalars["Int"]>
+  last?: InputMaybe<Scalars["Int"]>
+  locales?: Array<Locale>
+  orderBy?: InputMaybe<CommentOrderByInput>
+  skip?: InputMaybe<Scalars["Int"]>
+  stage?: Stage
+  where?: InputMaybe<CommentWhereInput>
+}
+
+export type QueryCommentsConnectionArgs = {
+  after?: InputMaybe<Scalars["String"]>
+  before?: InputMaybe<Scalars["String"]>
+  first?: InputMaybe<Scalars["Int"]>
+  last?: InputMaybe<Scalars["Int"]>
+  locales?: Array<Locale>
+  orderBy?: InputMaybe<CommentOrderByInput>
+  skip?: InputMaybe<Scalars["Int"]>
+  stage?: Stage
+  where?: InputMaybe<CommentWhereInput>
 }
 
 export type QueryNodeArgs = {
@@ -2055,7 +2722,10 @@ export type ScheduledOperationUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>
 }
 
-export type ScheduledOperationAffectedDocument = Asset | Post
+export type ScheduledOperationAffectedDocument =
+  | Asset
+  | Comment
+  | Post
 
 export type ScheduledOperationConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
@@ -3598,14 +4268,6 @@ export type GetPostsQuery = {
   }>
 }
 
-export type PublishPostMutationVariables = Exact<{
-  id?: InputMaybe<Scalars["ID"]>
-}>
-
-export type PublishPostMutation = {
-  publishPost?: { id: string; slug: string } | null
-}
-
 export type UpdatePostBySlugMutationVariables = Exact<{
   slug: Scalars["String"]
   newSlug?: InputMaybe<Scalars["String"]>
@@ -3668,14 +4330,6 @@ export const GetPostsDocument = /*#__PURE__*/ gql`
       slug
       title
       content
-    }
-  }
-`
-export const PublishPostDocument = /*#__PURE__*/ gql`
-  mutation PublishPost($id: ID) {
-    publishPost(where: { id: $id }) {
-      id
-      slug
     }
   }
 `
@@ -3779,21 +4433,6 @@ export function getSdk(
           }),
         "GetPosts",
         "query"
-      )
-    },
-    PublishPost(
-      variables?: PublishPostMutationVariables,
-      requestHeaders?: Dom.RequestInit["headers"]
-    ): Promise<PublishPostMutation> {
-      return withWrapper(
-        (wrappedRequestHeaders) =>
-          client.request<PublishPostMutation>(
-            PublishPostDocument,
-            variables,
-            { ...requestHeaders, ...wrappedRequestHeaders }
-          ),
-        "PublishPost",
-        "mutation"
       )
     },
     UpdatePostBySlug(

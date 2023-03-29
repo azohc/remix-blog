@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { GraphQLClient } from "graphql-request"
 import type * as Dom from "graphql-request/src/types.dom"
 import gql from "graphql-tag"

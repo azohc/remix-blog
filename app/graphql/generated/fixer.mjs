@@ -10,7 +10,7 @@ let generated = readFileSync(generatedFile, "utf-8")
 
 generated = generated.replace(
   'import { GraphQLClient } from "graphql-request"',
-  'import type { GraphQLClient } from "graphql-request"'
+  '/* eslint-disable @typescript-eslint/no-explicit-any */\nimport type { GraphQLClient } from "graphql-request"'
 )
 generated = generated.replace(
   'import * as Dom from "graphql-request/dist/types.dom"',

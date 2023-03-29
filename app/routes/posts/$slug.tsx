@@ -5,11 +5,13 @@ import { useLoaderData } from "@remix-run/react"
 import { marked } from "marked"
 import invariant from "tiny-invariant"
 import PostView from "~/components/PostView"
+import {
+  createComment,
+  createCommentReply,
+} from "~/models/comment.server"
 
 import {
   connectCommentToPost,
-  createComment,
-  createCommentReply,
   getPost,
   getPostComments,
 } from "~/models/post.server"

@@ -1,11 +1,6 @@
-import {
+import type {
   ConnectCommentToPostMutation,
   ConnectCommentToPostMutationVariables,
-  CreateCommentMutation,
-  CreateCommentMutationVariables,
-  CreateCommentReplyDocument,
-  CreateCommentReplyMutation,
-  CreateCommentReplyMutationVariables,
   CreatePostMutation,
   CreatePostMutationVariables,
   DeletePostBySlugMutation,
@@ -15,17 +10,12 @@ import {
   GetPostQuery,
   GetPostQueryVariables,
   GetPostsQuery,
-  PublishCommentMutation,
   PublishPostMutation,
   UpdatePostBySlugMutation,
   UpdatePostBySlugMutationVariables,
 } from "~/graphql/generated/graphql"
-import {
-  ConnectCommentToPostDocument,
-  CreateCommentDocument,
-  PublishCommentDocument,
-} from "~/graphql/generated/graphql"
 import { GetPostCommentsDocument } from "~/graphql/generated/graphql"
+import { ConnectCommentToPostDocument } from "~/graphql/generated/graphql"
 import { GetPostDocument } from "~/graphql/generated/graphql"
 import { PublishPostDocument } from "~/graphql/generated/graphql"
 import { DeletePostBySlugDocument } from "~/graphql/generated/graphql"
@@ -110,36 +100,6 @@ export async function getPostComments(
   return post.comments
 }
 
-async function publishComment(id: string) {
-  const { publishComment } =
-    await gql.request<PublishCommentMutation>(
-      PublishCommentDocument,
-      {
-        id,
-      }
-    )
-  return publishComment
-}
-
-export async function createComment(
-  vars: CreateCommentMutationVariables
-) {
-  const { createComment } = await gql.request<CreateCommentMutation>(
-    CreateCommentDocument,
-    vars
-  )
-  if (!createComment) {
-    throw new Error(
-      `an error occurred while creating the comment with variables ${JSON.stringify(
-        vars
-      )}`
-    )
-  }
-
-  await publishComment(createComment.id)
-  return createComment
-}
-
 export async function connectCommentToPost(
   vars: ConnectCommentToPostMutationVariables
 ) {
@@ -155,24 +115,4 @@ export async function connectCommentToPost(
   }
   await publishPost(updatePost.id)
   return updatePost
-}
-
-export async function createCommentReply(
-  vars: CreateCommentReplyMutationVariables
-) {
-  const { createComment } =
-    await gql.request<CreateCommentReplyMutation>(
-      CreateCommentReplyDocument,
-      vars
-    )
-  if (!createComment) {
-    throw new Error(
-      `an error occurred while creating the comment with variables ${JSON.stringify(
-        vars
-      )}`
-    )
-  }
-
-  await publishComment(createComment.id)
-  return createComment
 }

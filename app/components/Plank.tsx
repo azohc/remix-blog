@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 const transform =
-  "transform transitoverflow-hiddenion duration-500 motion-reduce:transition-none"
+  "transform transition duration-500 motion-reduce:transition-none"
 const join = (classNames: string[]) => classNames.join(" ")
 
 export default function Plank() {
@@ -18,9 +18,8 @@ export default function Plank() {
       <h1
         className={join([
           transform,
-          "absolute text-red-900".concat(
-            shifted ? " translate-x-full" : " translate-x-0"
-          ),
+          "absolute text-red-900",
+          shifted ? " translate-x-full" : " translate-x-0",
         ])}
         style={{ backfaceVisibility: "hidden" }}
       >
@@ -29,9 +28,8 @@ export default function Plank() {
       <h1
         className={join([
           transform,
-          "absolute text-blue-900".concat(
-            shifted ? " translate-x-0" : " -translate-x-full"
-          ),
+          "absolute text-blue-900",
+          shifted ? " translate-x-0" : " -translate-x-full",
         ])}
         style={{ backfaceVisibility: "hidden" }}
       >

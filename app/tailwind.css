@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500;600;700&display=swap");
+
+* {
+  font-family: "Inconsolata", monospace;
+}
+
+@layer base {
+  h1 {
+    @apply text-3xl text-jet pb-3;
+  }
+  h2 {
+    @apply text-2xl text-jet pb-2;
+  }
+  h3 {
+    @apply text-xl text-jet pb-1;
+  }
+  a {
+    @apply text-blueGray hover:text-blue-500 active:text-blue-900 hover:underline;
+  }
+  p {
+    @apply leading-6 pb-2;
+  }
+  blockquote {
+    @apply pl-5 before:content-['>'] before:absolute relative before:left-0.5 before:top-0  before:text-jet text-jet;
+  }
+  code {
+    @apply py-[0.1rem] px-1 bg-blueGray text-white rounded-sm;
+  }
+}

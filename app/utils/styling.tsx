@@ -25,3 +25,8 @@ export const C_COLORS: ThemeColors = {
   codeBg: "bg-blueGray",
   codeText: "text-amber-50",
 }
+
+export const border = "rounded border-2 border-lightBlueGray"
+
+export const input =
+  "outline-none focus:ring-1 ring-blueGray focus:border-blueGray px-2 hover:border-gray transition"

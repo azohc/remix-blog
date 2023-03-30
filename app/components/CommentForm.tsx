@@ -1,10 +1,6 @@
 import { Form } from "@remix-run/react"
 import { useColors } from "~/root"
-import { join } from "~/utils/styling"
-
-const border = "rounded border-2 border-lightBlueGray"
-const input =
-  "outline-none focus:ring-1 ring-blueGray focus:border-blueGray px-2 hover:border-gray transition"
+import { border, input, join } from "~/utils/styling"
 
 interface CommentFormProps {
   parentCommentId?: string

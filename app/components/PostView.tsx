@@ -152,12 +152,14 @@ export default function PostView({
       />
 
       <hr />
-      <section id="comments">
+      <section id="comments" className="mx-4">
         <h3>Comments</h3>
         <CommentForm />
-        {comments.map((comment, i) => (
-          <Comment key={i} comment={comment} />
-        ))}
+        <div className="flex flex-col gap-2 py-4">
+          {comments.map((comment, i) => (
+            <Comment key={i} comment={comment} />
+          ))}
+        </div>
       </section>
     </main>
   )

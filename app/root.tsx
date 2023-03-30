@@ -6,6 +6,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
 } from "@remix-run/react"
 import { createContext, useContext, useState } from "react"
 import Plank from "./components/Plank"
@@ -38,6 +39,8 @@ export function useColors() {
 export default function App() {
   const [colors, setColors] = useState(A_COLORS)
   const [plankOnLeft, setPlankOnLeft] = useState(true)
+  const location = useLocation()
+  const atRoot = location.pathname === "/"
 
   const flipColors = () => {
     setColors((prev) => (prev === C_COLORS ? A_COLORS : C_COLORS))
@@ -55,7 +58,12 @@ export default function App() {
         <Links />
       </head>
       <body className={join([colors.bg, colors.text])}>
-        <header className="mb-16 self-start w-full px-4">
+        <header
+          className={join([
+            "transition self-start w-full px-8",
+            atRoot ? "my-16" : "my-8",
+          ])}
+        >
           <div
             className={join([
               "flex",

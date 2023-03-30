@@ -1,4 +1,6 @@
 import { Form } from "@remix-run/react"
+import { useColors } from "~/root"
+import { join } from "~/utils/styling"
 
 const border = "rounded border-2 border-lightBlueGray"
 const input =
@@ -10,30 +12,39 @@ interface CommentFormProps {
 export default function CommentForm({
   parentCommentId,
 }: CommentFormProps) {
+  const { colors } = useColors()
+
   return (
     <Form
       method={parentCommentId ? "patch" : "post"}
-      className={"p-2 grid grid-cols-[1fr_3fr] gap-y-2 gap-x-4 max-w-lg ".concat(
-        border
-      )}
+      className={join([
+        border,
+        "p-2 grid grid-cols-[1fr_3fr] gap-y-2 gap-x-4 max-w-lg",
+      ])}
     >
-      <label htmlFor="author" className="opacity-70">
+      <label
+        htmlFor="author"
+        className={join(["opacity-70", colors.text])}
+      >
         Name
       </label>
       <input
         type="text"
         id="author"
         name="author"
-        className={[input, border].join(" ")}
+        className={join([input, border, colors.bg, colors.text])}
       />
-      <label htmlFor="comment" className="opacity-70">
+      <label
+        htmlFor="comment"
+        className={join(["opacity-70", colors.text])}
+      >
         Comment
       </label>
       <textarea
         id="comment"
         name="comment"
         required
-        className={[input, border].join(" ")}
+        className={join([input, border, colors.bg, colors.text])}
       />
       {parentCommentId && (
         <input
@@ -46,8 +57,11 @@ export default function CommentForm({
       <div />
       <button
         type="submit"
-        className="place-self-end
-      rounded-md px-1 py-0.5 bg-blueGray hover:bg-lightGray active:bg-gray hover:text-jet text-white transition"
+        className={join([
+          "place-self-end rounded-md px-1 py-0.5 hover:bg-lightGray active:bg-gray transition hover:text-white",
+          colors.bg,
+          colors.text,
+        ])}
       >
         Submit
       </button>

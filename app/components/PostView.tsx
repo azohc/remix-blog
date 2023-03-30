@@ -1,4 +1,6 @@
 import { Link } from "@remix-run/react"
+import { useColors } from "~/root"
+import { join } from "~/utils/styling"
 import Comment from "./Comment"
 import CommentForm from "./CommentForm"
 import Tag from "./Tag"
@@ -45,6 +47,7 @@ export default function PostView({
   html,
   comments,
 }: PostViewProps) {
+  const { colors } = useColors()
   let showUpdatedAt = false
   let createdAt = ""
   let updatedAt = ""
@@ -57,14 +60,38 @@ export default function PostView({
   }
 
   return (
-    <main className="mx-auto max-w-4xl px-2 py-4">
+    <main
+      className={join([
+        "mx-auto max-w-4xl px-2",
+        colors.bg,
+        colors.text,
+      ])}
+    >
       <header className="flex items-start">
-        <Link to="/" className="basis-1/12" prefetch="intent">
+        <Link
+          to="/"
+          className={join([
+            "basis-1/12 text-center",
+            colors.bg,
+            colors.text,
+          ])}
+          prefetch="intent"
+        >
           &lt;
         </Link>
         <div className="flex flex-col gap-2">
-          <span className="opacity-70">/{post.slug}</span>
-          <h1 className="flex-1 text-5xl leading-tight">
+          <span
+            className={join(["opacity-70", colors.bg, colors.text])}
+          >
+            /{post.slug}
+          </span>
+          <h1
+            className={join([
+              "flex-1 text-5xl leading-tight",
+              colors.bg,
+              colors.text,
+            ])}
+          >
             {post?.title}
           </h1>
         </div>
@@ -72,13 +99,29 @@ export default function PostView({
       <hr />
       <section id="details" className="flex justify-between mx-4">
         <div className="grid grid-cols-[1fr_3fr] text-sm gap-x-2 mt-1">
-          <span className="opacity-70">Published</span>
-          {createdAt && <span>{formatDateTime(createdAt)}</span>}
+          <span
+            className={join(["opacity-70", colors.bg, colors.text])}
+          >
+            Published
+          </span>
+          {createdAt && (
+            <span className={join([colors.bg, colors.text])}>
+              {formatDateTime(createdAt)}
+            </span>
+          )}
 
           {showUpdatedAt && (
             <>
-              <span className="opacity-70">Updated</span>
-              <span>
+              <span
+                className={join([
+                  "opacity-70",
+                  colors.bg,
+                  colors.text,
+                ])}
+              >
+                Updated
+              </span>
+              <span className={join([colors.bg, colors.text])}>
                 <span>{formatDateTime(updatedAt)}</span>
               </span>
             </>
@@ -93,7 +136,7 @@ export default function PostView({
       </section>
       <div
         dangerouslySetInnerHTML={{ __html: html }}
-        className="mx-2 my-6"
+        className={join(["mx-2 my-6", colors.bg, colors.text])}
       />
 
       <hr />

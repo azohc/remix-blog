@@ -1,3 +1,6 @@
+import { useColors } from "~/root"
+import { join } from "~/utils/styling"
+
 type SizeOptions = "sm" | "base"
 
 interface TagProps {
@@ -11,12 +14,17 @@ const sizeClass = (size?: SizeOptions) => {
   }
   return "text-sm"
 }
+
 export default function Tag({ tag, size }: TagProps) {
+  const { colors } = useColors()
   return (
     <span
-      className={"py-0.5 px-1 rounded border-[1px] ".concat(
-        sizeClass(size)
-      )}
+      className={join([
+        "py-0.5 px-1 rounded border-[1px]",
+        sizeClass(size),
+        colors.bg,
+        colors.text,
+      ])}
     >
       {tag}
     </span>

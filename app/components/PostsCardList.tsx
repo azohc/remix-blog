@@ -1,5 +1,7 @@
 import { Link } from "@remix-run/react"
 import type { GetPostsQuery } from "~/graphql/generated/graphql"
+import { useColors } from "~/root"
+import { join } from "~/utils/styling"
 import Tag from "./Tag"
 
 interface PostsCardListsProps {
@@ -8,6 +10,8 @@ interface PostsCardListsProps {
 export default function PostsCardList({
   posts,
 }: PostsCardListsProps) {
+  const { colors } = useColors()
+
   return (
     <ul className="flex flex-col gap-2 w-4/5 max-w-sm items-center">
       {posts.map((post) => (
@@ -17,13 +21,19 @@ export default function PostsCardList({
           className="rounded-md shadow-md p-4 flex flex-col gap-2 justify-between hover:shadow-blueGray transition hover:no-underline"
           key={post.id}
         >
-          <h3>{post.title}</h3>
+          <h3 className={join([colors.bg, colors.text])}>
+            {post.title}
+          </h3>
           <div className="flex gap-2 justify-between items-baseline text-jet">
-            <span className="opacity-70">
+            <span
+              className={join(["opacity-70", colors.bg, colors.text])}
+            >
               {post.comments.length} comment
               {post.comments.length !== 1 && "s"}
             </span>
-            <div className="flex gap-1">
+            <div
+              className={join(["flex gap-1", colors.text, colors.bg])}
+            >
               {post.tags.map((tag, i) => (
                 <Tag key={i} tag={tag} />
               ))}

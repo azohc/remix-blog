@@ -105,7 +105,13 @@ export default function PostView({
             Published
           </span>
           {createdAt && (
-            <span className={join([colors.bg, colors.text])}>
+            <span
+              className={join([
+                "font-medium",
+                colors.bg,
+                colors.text,
+              ])}
+            >
               {formatDateTime(createdAt)}
             </span>
           )}
@@ -121,7 +127,13 @@ export default function PostView({
               >
                 Updated
               </span>
-              <span className={join([colors.bg, colors.text])}>
+              <span
+                className={join([
+                  "font-medium",
+                  colors.bg,
+                  colors.text,
+                ])}
+              >
                 <span>{formatDateTime(updatedAt)}</span>
               </span>
             </>

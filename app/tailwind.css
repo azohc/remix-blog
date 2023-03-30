@@ -10,24 +10,28 @@
 
 @layer base {
   h1 {
-    @apply text-3xl text-jet pb-3;
+    @apply text-4xl text-blueGray pb-3 font-bold;
   }
   h2 {
-    @apply text-2xl text-jet pb-2;
+    @apply text-2xl text-blueGray pb-2 font-semibold;
   }
   h3 {
-    @apply text-xl text-jet pb-1;
+    @apply text-xl text-blueGray pb-1 font-medium;
   }
   a {
     @apply text-blueGray hover:text-blue-500 active:text-blue-900 hover:underline;
   }
   p {
-    @apply leading-6 pb-2;
+    @apply leading-6 pb-4;
   }
   blockquote {
     @apply pl-5 before:content-['>'] before:absolute relative before:left-0.5 before:top-0  before:text-jet text-jet;
   }
   code {
     @apply py-[0.1rem] px-1 bg-blueGray text-white rounded-sm;
+  }
+
+  hr {
+    @apply mx-4 my-2 border-blueGray;
   }
 }

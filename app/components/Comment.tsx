@@ -1,5 +1,6 @@
 import { Form } from "@remix-run/react"
 import { useState } from "react"
+import CommentForm from "./CommentForm"
 import { formatDateTime } from "./PostView"
 
 interface CommentProps {
@@ -37,21 +38,7 @@ export default function Comment({ comment }: CommentProps) {
       <button onClick={() => setShowReplyForm(!showReplyForm)}>
         {showReplyForm ? "Discard" : "Reply"}
       </button>
-      {showReplyForm && (
-        <Form method="patch">
-          <label htmlFor="author">Name</label>
-          <input type="text" id="author" name="author" />
-          <label htmlFor="comment">Comment</label>
-          <textarea id="comment" name="comment" required />
-          <input
-            type="text"
-            name="parent"
-            hidden
-            defaultValue={comment.id}
-          />
-          <button type="submit">Submit</button>
-        </Form>
-      )}
+      {showReplyForm && <CommentForm parentCommentId={comment.id} />}
     </div>
   )
 }

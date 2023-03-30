@@ -1,5 +1,7 @@
-import { Form } from "@remix-run/react"
+import { Form, Link } from "@remix-run/react"
 import Comment from "./Comment"
+import CommentForm from "./CommentForm"
+import Tag from "./Tag"
 
 interface PostViewProps {
   post: {
@@ -32,7 +34,7 @@ export const formatDateTime = (datestr: string) => {
     day: "numeric",
     month: "long",
     year: "numeric",
-  })} at ${date.toLocaleTimeString(locale, {
+  })} @ ${date.toLocaleTimeString(locale, {
     hour: "numeric",
     minute: "numeric",
   })}`
@@ -55,33 +57,49 @@ export default function PostView({
   }
 
   return (
-    <main className="mx-auto max-w-4xl">
-      <h1 className="my-6 border-b-2 text-center text-3xl">
-        {post?.title}
-      </h1>
-      <h2>
-        <span>
+    <main className="mx-auto max-w-4xl px-2 py-4">
+      <header className="flex items-start">
+        <Link to="/" className="basis-1/12" prefetch="intent">
+          &lt;
+        </Link>
+        <div className="flex flex-col gap-2">
+          <span className="opacity-50">/{post.slug}</span>
+          <h1 className="flex-1 text-5xl leading-tight">
+            {post?.title}
+          </h1>
+        </div>
+      </header>
+      <hr />
+      <section id="details" className="flex justify-between mx-4">
+        <div className="grid grid-cols-[1fr_3fr] text-sm gap-x-2 mt-1">
+          <span className="opacity-50">Published</span>
+          {createdAt && <span>{formatDateTime(createdAt)}</span>}
+
+          {showUpdatedAt && (
+            <>
+              <span className="opacity-50">Updated</span>
+              <span>
+                <span>{formatDateTime(updatedAt)}</span>
+              </span>
+            </>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-2 items-end">
           {post?.tags.map((tag, i) => (
-            <span key={i}>{tag}</span>
+            <Tag key={i} tag={tag} size="sm" />
           ))}
-        </span>
-        {createdAt && <span>{formatDateTime(createdAt)}</span>}
-        {showUpdatedAt && (
-          <span>
-            <span>{formatDateTime(updatedAt)}</span>
-          </span>
-        )}
-      </h2>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+        </div>
+      </section>
+      <div
+        dangerouslySetInnerHTML={{ __html: html }}
+        className="mx-2 my-6"
+      />
+
+      <hr />
       <section id="comments">
-        <h2>comments</h2>
-        <Form method="post">
-          <label htmlFor="author">Name</label>
-          <input type="text" id="author" name="author" />
-          <label htmlFor="comment">Comment</label>
-          <textarea id="comment" name="comment" required />
-          <button type="submit">Submit</button>
-        </Form>
+        <h3>Comments</h3>
+        <CommentForm />
         {comments.map((comment, i) => (
           <Comment key={i} comment={comment} />
         ))}

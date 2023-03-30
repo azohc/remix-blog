@@ -11,14 +11,14 @@ export default function Plank() {
     <div
       className={join([
         "transition-[width] h-16 overflow-x-hidden relative cursor-pointer",
-        shifted ? "w-24" : "w-32",
+        shifted ? "w-24 bg-slate-100" : "w-32 bg-amber-50",
       ])}
       onClick={() => setShifted(!shifted)}
     >
       <h1
         className={join([
           transform,
-          "absolute text-red-900",
+          "absolute text-jet",
           shifted ? " translate-x-full" : " translate-x-0",
         ])}
         style={{ backfaceVisibility: "hidden" }}
@@ -28,7 +28,7 @@ export default function Plank() {
       <h1
         className={join([
           transform,
-          "absolute text-blue-900",
+          "absolute text-blueGray",
           shifted ? " translate-x-0" : " -translate-x-full",
         ])}
         style={{ backfaceVisibility: "hidden" }}

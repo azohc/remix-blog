@@ -1,4 +1,4 @@
-import { Form, Link } from "@remix-run/react"
+import { Link } from "@remix-run/react"
 import Comment from "./Comment"
 import CommentForm from "./CommentForm"
 import Tag from "./Tag"

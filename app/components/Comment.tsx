@@ -1,4 +1,3 @@
-import { Form } from "@remix-run/react"
 import { useState } from "react"
 import CommentForm from "./CommentForm"
 import { formatDateTime } from "./PostView"

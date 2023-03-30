@@ -12,7 +12,7 @@ import { deletePost, getPost, updatePost } from "~/models/post.server"
 
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, "params.slug is required")
-  const { post } = await getPost({ slug: params.slug })
+  const post = await getPost({ slug: params.slug })
   if (!post) {
     return redirect("/posts/admin")
   }

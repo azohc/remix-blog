@@ -4,5 +4,9 @@ query GetPosts {
     slug
     title
     content
+    tags
+    comments {
+      id
+    }
   }
 }

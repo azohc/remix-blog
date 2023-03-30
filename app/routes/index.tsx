@@ -1,11 +1,23 @@
-import { Link } from "@remix-run/react"
+import { json } from "@remix-run/node"
+import { useLoaderData } from "@remix-run/react"
+import PostsCardList from "~/components/PostsCardList"
+import { getPosts } from "~/models/post.server"
+
+export const loader = async () => {
+  const posts = await getPosts()
+  return json(posts)
+}
 
 export default function Index() {
+  const posts = useLoaderData<typeof loader>()
+
   return (
-    <div className="mx-auto mt-16 max-w-7xl text-center">
-      <Link to="/posts" className="text-xl text-blue-600 underline">
-        Blog Posts
-      </Link>
-    </div>
+    <main className="mx-auto mt-16 max-w-7xl flex flex-col items-center">
+      <header className="mb-16">
+        <h1>azohc.blog</h1>
+        <em>TODO interactive name graphic</em>
+      </header>
+      <PostsCardList posts={posts} />
+    </main>
   )
 }

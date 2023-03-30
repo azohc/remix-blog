@@ -3,7 +3,7 @@ import { Link, useLoaderData } from "@remix-run/react"
 import { getPosts } from "~/models/post.server"
 
 export const loader = async () => {
-  const { posts } = await getPosts()
+  const posts = await getPosts()
   return json(posts)
 }
 

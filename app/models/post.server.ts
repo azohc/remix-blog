@@ -25,13 +25,16 @@ import { GetPostsDocument } from "~/graphql/generated/graphql"
 import { gql } from "~/lib/client"
 
 export async function getPosts() {
-  return gql.request<GetPostsQuery>(GetPostsDocument, undefined, {
-    "Cache-Control": "no-store",
-  })
+  const { posts } = await gql.request<GetPostsQuery>(GetPostsDocument)
+  return posts
 }
 
 export async function getPost(vars: GetPostQueryVariables) {
-  return gql.request<GetPostQuery>(GetPostDocument, vars)
+  const { post } = await gql.request<GetPostQuery>(
+    GetPostDocument,
+    vars
+  )
+  return post
 }
 
 export async function createPost(vars: CreatePostMutationVariables) {

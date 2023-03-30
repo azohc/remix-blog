@@ -20,7 +20,7 @@ export const loader = async ({ params }: LoaderArgs) => {
   const slug = params.slug
   invariant(slug, `params.slug is required`)
 
-  const { post } = await getPost({ slug })
+  const post = await getPost({ slug })
   invariant(post, `Post with slug "${slug} not found`)
 
   const comments = await getPostComments({ slug })

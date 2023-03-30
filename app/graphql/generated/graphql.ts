@@ -4346,6 +4346,8 @@ export type GetPostsQuery = {
     slug: string
     title: string
     content: string
+    tags: Array<string>
+    comments: Array<{ id: string }>
   }>
 }
 
@@ -4478,6 +4480,10 @@ export const GetPostsDocument = /*#__PURE__*/ gql`
       slug
       title
       content
+      tags
+      comments {
+        id
+      }
     }
   }
 `

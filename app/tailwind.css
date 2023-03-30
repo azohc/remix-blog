@@ -30,7 +30,6 @@
   code {
     @apply py-[0.1rem] px-1 bg-blueGray text-white rounded-sm;
   }
-
   hr {
     @apply mx-4 my-2 border-blueGray;
   }

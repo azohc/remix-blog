@@ -8,8 +8,10 @@ import {
   ScrollRestoration,
 } from "@remix-run/react"
 import { createContext, useContext, useState } from "react"
+import Plank from "./components/Plank"
 import styles from "./tailwind.css"
-import { ColorContextValue, C_COLORS, join } from "./utils/styling"
+import type { ColorContextValue } from "./utils/styling"
+import { C_COLORS, join } from "./utils/styling"
 import { A_COLORS } from "./utils/styling"
 
 export const meta: MetaFunction = () => ({
@@ -35,6 +37,16 @@ export function useColors() {
 
 export default function App() {
   const [colors, setColors] = useState(A_COLORS)
+  const [plankOnLeft, setPlankOnLeft] = useState(true)
+
+  const flipColors = () => {
+    setColors((prev) => (prev === C_COLORS ? A_COLORS : C_COLORS))
+  }
+
+  const handlePlankClick = () => {
+    setPlankOnLeft((prev) => !prev)
+    flipColors()
+  }
 
   return (
     <html lang="en">
@@ -42,15 +54,21 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className={join([colors.background, colors.text])}>
+      <body className={join([colors.bg, colors.text])}>
+        <header className="mb-16 self-start w-full px-4">
+          <div
+            className={join([
+              "flex",
+              plankOnLeft ? "justify-start" : "justify-end",
+            ])}
+          >
+            <Plank onClick={handlePlankClick} colors={colors} />
+          </div>
+        </header>
         <ColorContext.Provider
           value={{
             colors,
-            flipColors: () => {
-              setColors((prev) =>
-                prev === C_COLORS ? A_COLORS : C_COLORS
-              )
-            },
+            flipColors,
           }}
         >
           <Outlet />

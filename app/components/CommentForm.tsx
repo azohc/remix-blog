@@ -17,7 +17,7 @@ export default function CommentForm({
         border
       )}
     >
-      <label htmlFor="author" className="opacity-50">
+      <label htmlFor="author" className="opacity-70">
         Name
       </label>
       <input
@@ -26,7 +26,7 @@ export default function CommentForm({
         name="author"
         className={[input, border].join(" ")}
       />
-      <label htmlFor="comment" className="opacity-50">
+      <label htmlFor="comment" className="opacity-70">
         Comment
       </label>
       <textarea

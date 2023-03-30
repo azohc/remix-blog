@@ -1,8 +1,10 @@
 export const join = (classNames: string[]) => classNames.join(" ")
 
-type ThemeColors = {
-  background: string
+export type ThemeColors = {
+  bg: string
   text: string
+  codeBg: string
+  codeText: string
 }
 
 export interface ColorContextValue {
@@ -11,10 +13,14 @@ export interface ColorContextValue {
 }
 
 export const A_COLORS: ThemeColors = {
-  background: "bg-slate-100",
+  bg: "bg-slate-100",
   text: "text-blueGray",
+  codeBg: "bg-blueGray",
+  codeText: "text-slate-100",
 }
 export const C_COLORS: ThemeColors = {
-  background: "bg-amber-50",
+  bg: "bg-amber-50",
   text: "text-jet",
+  codeBg: "bg-blueGray",
+  codeText: "bg-amber-50",
 }

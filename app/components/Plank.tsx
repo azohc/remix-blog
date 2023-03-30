@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
-import { useColors } from "~/root"
+import type { ThemeColors } from "~/utils/styling"
 import { join } from "~/utils/styling"
 
 const transform =
@@ -8,11 +8,11 @@ const transform =
 
 interface PlankProps {
   onClick: () => void
+  colors: ThemeColors
 }
 
-export default function Plank({ onClick }: PlankProps) {
+export default function Plank({ onClick, colors }: PlankProps) {
   const [shifted, setShifted] = useState(true)
-  const { colors } = useColors()
 
   const handleClick = () => {
     setShifted((prev) => !prev)
@@ -28,7 +28,7 @@ export default function Plank({ onClick }: PlankProps) {
       className={join([
         "transition-[width] h-16 overflow-x-hidden relative cursor-pointer",
         shifted ? "w-24 " : "w-32 bg-amber-50",
-        colors.background,
+        colors.bg,
       ])}
       onClick={handleClick}
     >

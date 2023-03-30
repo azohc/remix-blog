@@ -63,7 +63,7 @@ export default function PostView({
           &lt;
         </Link>
         <div className="flex flex-col gap-2">
-          <span className="opacity-50">/{post.slug}</span>
+          <span className="opacity-70">/{post.slug}</span>
           <h1 className="flex-1 text-5xl leading-tight">
             {post?.title}
           </h1>
@@ -72,12 +72,12 @@ export default function PostView({
       <hr />
       <section id="details" className="flex justify-between mx-4">
         <div className="grid grid-cols-[1fr_3fr] text-sm gap-x-2 mt-1">
-          <span className="opacity-50">Published</span>
+          <span className="opacity-70">Published</span>
           {createdAt && <span>{formatDateTime(createdAt)}</span>}
 
           {showUpdatedAt && (
             <>
-              <span className="opacity-50">Updated</span>
+              <span className="opacity-70">Updated</span>
               <span>
                 <span>{formatDateTime(updatedAt)}</span>
               </span>

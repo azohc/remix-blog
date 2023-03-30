@@ -19,7 +19,7 @@ export default function PostsCardList({
         >
           <h3>{post.title}</h3>
           <div className="flex gap-2 justify-between items-baseline text-jet">
-            <span className="opacity-50">
+            <span className="opacity-70">
               {post.comments.length} comment
               {post.comments.length !== 1 && "s"}
             </span>

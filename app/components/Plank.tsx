@@ -1,9 +1,10 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
+import { useColors } from "~/root"
+import { join } from "~/utils/styling"
 
 const transform =
   "transform transition duration-500 motion-reduce:transition-none"
-export const join = (classNames: string[]) => classNames.join(" ")
 
 interface PlankProps {
   onClick: () => void
@@ -11,6 +12,7 @@ interface PlankProps {
 
 export default function Plank({ onClick }: PlankProps) {
   const [shifted, setShifted] = useState(true)
+  const { colors } = useColors()
 
   const handleClick = () => {
     setShifted((prev) => !prev)
@@ -25,7 +27,8 @@ export default function Plank({ onClick }: PlankProps) {
       }}
       className={join([
         "transition-[width] h-16 overflow-x-hidden relative cursor-pointer",
-        shifted ? "w-24 bg-slate-100" : "w-32 bg-amber-50",
+        shifted ? "w-24 " : "w-32 bg-amber-50",
+        colors.background,
       ])}
       onClick={handleClick}
     >
@@ -34,6 +37,7 @@ export default function Plank({ onClick }: PlankProps) {
           transform,
           "absolute text-jet",
           shifted ? " translate-x-full" : " translate-x-0",
+          colors.text,
         ])}
         style={{ backfaceVisibility: "hidden" }}
       >
@@ -41,6 +45,7 @@ export default function Plank({ onClick }: PlankProps) {
       </h1>
       <h1
         className={join([
+          colors.text,
           transform,
           "absolute text-blueGray",
           shifted ? " translate-x-0" : " -translate-x-full",

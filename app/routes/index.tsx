@@ -1,9 +1,11 @@
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { useState } from "react"
-import Plank, { join } from "~/components/Plank"
+import Plank from "~/components/Plank"
 import PostsCardList from "~/components/PostsCardList"
 import { getPosts } from "~/models/post.server"
+import { useColors } from "~/root"
+import { join } from "~/utils/styling"
 
 export const loader = async () => {
   const posts = await getPosts()
@@ -12,7 +14,13 @@ export const loader = async () => {
 
 export default function Index() {
   const posts = useLoaderData<typeof loader>()
+  const { flipColors } = useColors()
   const [plankOnLeft, setPlankOnLeft] = useState(true)
+
+  const handlePlankClick = () => {
+    setPlankOnLeft((prev) => !prev)
+    flipColors()
+  }
 
   return (
     <main className="mx-auto mt-16 max-w-7xl flex flex-col items-center px-4">
@@ -23,7 +31,7 @@ export default function Index() {
             plankOnLeft ? "justify-start" : "justify-end",
           ])}
         >
-          <Plank onClick={() => setPlankOnLeft((prev) => !prev)} />
+          <Plank onClick={handlePlankClick} />
         </div>
       </header>
       <h2 className="mb-16">

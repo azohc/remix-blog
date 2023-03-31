@@ -148,7 +148,7 @@ export default function PostView({
       </section>
       <div
         dangerouslySetInnerHTML={{ __html: html }}
-        className={join(["mx-2 my-6", colors.bg, colors.text])}
+        className={join(["mx-2 my-6"])}
       />
 
       <hr />

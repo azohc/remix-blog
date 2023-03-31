@@ -129,7 +129,7 @@ export default function PostView({
           )}
         </div>
 
-        <div className="flex flex-col gap-2 items-end">
+        <div className="flex gap-2 items-end">
           {post?.tags.map((tag, i) => (
             <Tag key={i} tag={tag} size="sm" />
           ))}

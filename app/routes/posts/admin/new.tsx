@@ -31,7 +31,7 @@ export const action = async ({ request }: ActionArgs) => {
     title,
     slug,
     content,
-    tags: new Set(tags.split(" ")),
+    tags: Array.from(new Set(tags.split(" "))),
   })
 
   return redirect(`/posts/${slug}`)

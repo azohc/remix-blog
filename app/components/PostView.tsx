@@ -86,7 +86,10 @@ export default function PostView({
         </div>
       </header>
       <hr />
-      <section id="details" className="flex justify-between mx-4">
+      <section
+        id="details"
+        className="flex flex-wrap justify-between mx-4"
+      >
         <div className="grid grid-cols-[1fr_3fr] text-sm gap-x-2 mt-1">
           <span
             className={join(["opacity-70", colors.bg, colors.text])}

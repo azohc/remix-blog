@@ -31,7 +31,7 @@ export default function Comment({ comment }: CommentProps) {
     <div
       id={comment.id}
       className={join([
-        "rounded border-2 p-2 max-w-lg w-fit flex flex-col",
+        "rounded border-2 p-2 max-w-2xl w-fit flex flex-col",
         parentToHighlight === comment.id ? "ring-blue ring-2" : "",
       ])}
     >

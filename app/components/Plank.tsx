@@ -12,7 +12,7 @@ interface PlankProps {
 }
 
 export default function Plank({ onClick, colors }: PlankProps) {
-  const [shifted, setShifted] = useState(true)
+  const [shifted, setShifted] = useState(false)
 
   const handleClick = () => {
     setShifted((prev) => !prev)

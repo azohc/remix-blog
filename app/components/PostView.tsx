@@ -1,5 +1,6 @@
 import { Link } from "@remix-run/react"
 import { useColors } from "~/root"
+import { formatDateTime } from "~/utils/formatting"
 import { join } from "~/utils/styling"
 import Comment from "./Comment"
 import CommentForm from "./CommentForm"
@@ -28,18 +29,6 @@ interface PostViewProps {
       | null
       | undefined
   }[]
-}
-export const formatDateTime = (datestr: string) => {
-  const date = new Date(datestr)
-  const locale = "en-ES"
-  return `${date.toLocaleDateString(locale, {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  })} @ ${date.toLocaleTimeString(locale, {
-    hour: "numeric",
-    minute: "numeric",
-  })}`
 }
 
 export default function PostView({

@@ -1,9 +1,9 @@
 import { useLocation } from "@remix-run/react"
 import { useState } from "react"
 import { useColors } from "~/root"
+import { formatDateTime } from "~/utils/formatting"
 import { join } from "~/utils/styling"
 import CommentForm from "./CommentForm"
-import { formatDateTime } from "./PostView"
 
 interface CommentProps {
   comment: {

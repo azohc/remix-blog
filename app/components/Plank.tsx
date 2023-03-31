@@ -27,7 +27,7 @@ export default function Plank({ onClick, colors }: PlankProps) {
       }}
       className={join([
         "transition-[width] h-16 overflow-x-hidden relative cursor-pointer",
-        shifted ? "w-28 " : "w-32 bg-amber-50",
+        shifted ? "w-[105px] " : "w-32 bg-amber-50",
         colors.bg,
       ])}
       onClick={handleClick}

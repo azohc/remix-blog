@@ -88,13 +88,13 @@ export default function PostView({
       <hr />
       <section
         id="details"
-        className="flex flex-wrap justify-between mx-4"
+        className="flex flex-wrap justify-between mx-4 pb-6 gap-2"
       >
         <div className="grid grid-cols-[1fr_3fr] text-sm gap-x-2 mt-1">
           <span
             className={join(["opacity-70", colors.bg, colors.text])}
           >
-            Published
+            published
           </span>
           {createdAt && (
             <span
@@ -117,7 +117,7 @@ export default function PostView({
                   colors.text,
                 ])}
               >
-                Updated
+                updated
               </span>
               <span
                 className={join([
@@ -133,7 +133,7 @@ export default function PostView({
         </div>
 
         <div className="flex gap-2 items-end">
-          {post?.tags.map((tag, i) => (
+          {post?.tags[0].split(",").map((tag, i) => (
             <Tag key={i} tag={tag} size="sm" />
           ))}
         </div>
@@ -145,7 +145,7 @@ export default function PostView({
 
       <hr />
       <section id="comments" className="mx-4">
-        <h3>Comments</h3>
+        <h3>comments</h3>
         <CommentForm />
         <div className="flex flex-col gap-2 py-4">
           {comments.map((comment, i) => (

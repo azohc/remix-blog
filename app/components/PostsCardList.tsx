@@ -34,7 +34,7 @@ export default function PostsCardList({
             <div
               className={join(["flex gap-1", colors.text, colors.bg])}
             >
-              {post.tags.map((tag, i) => (
+              {post.tags[0].split(",").map((tag, i) => (
                 <Tag key={i} tag={tag} />
               ))}
             </div>

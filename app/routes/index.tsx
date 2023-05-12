@@ -16,11 +16,19 @@ export default function Index() {
 
   return (
     <main className="mx-auto mt-16 max-w-7xl flex flex-col items-center px-4">
-      <h2 className={join(["mb-16", colors.bg, colors.text])}>
-        lessons learnt on a journey into the world of{" "}
-        <code className={join([colors.codeBg, colors.codeText])}>
-          software development
-        </code>
+      <h2 className={join(["mb-16 w-3/4", colors.bg, colors.text])}>
+        <span>lessons learnt on a journey into the world of</span>
+        <div className="text-end">
+          <code
+            className={join([
+              "text-4xl",
+              colors.codeBg,
+              colors.codeText,
+            ])}
+          >
+            software development
+          </code>
+        </div>
       </h2>
       <PostsCardList posts={posts} />
     </main>

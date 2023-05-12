@@ -57,7 +57,13 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className={join([colors.bg, colors.text])}>
+      <body
+        className={join([
+          "lg:max-w-4xl lg:mx-auto",
+          colors.bg,
+          colors.text,
+        ])}
+      >
         <header
           className={join([
             "transition self-start w-full px-8",

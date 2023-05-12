@@ -8,5 +8,5 @@ export const formatDateTime = (datestr: string) => {
   })} @ ${date.toLocaleTimeString(locale, {
     hour: "numeric",
     minute: "numeric",
-  })}`
+  })}`.toLowerCase()
 }

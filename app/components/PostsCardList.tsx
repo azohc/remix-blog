@@ -16,9 +16,9 @@ export default function PostsCardList({
     <ul className="flex flex-col gap-2 w-4/5 max-w-sm items-center">
       {posts.map((post) => (
         <Link
-          to={`posts/${post.slug}`}
+          to={`/${post.slug}`}
           prefetch="intent"
-          className="rounded-md shadow-md p-4 flex flex-col gap-2 justify-between hover:shadow-blueGray transition hover:no-underline"
+          className="rounded-md shadow-lg border-[1px] p-4 flex flex-col gap-2 justify-between hover:shadow-blueGray transition hover:no-underline"
           key={post.id}
         >
           <h3 className={join([colors.bg, colors.text])}>

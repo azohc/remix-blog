@@ -13,17 +13,17 @@ export interface ColorContextValue {
 }
 
 export const A_COLORS: ThemeColors = {
-  bg: "bg-slate-100",
+  bg: "bg-slate-300",
   text: "text-blueGray",
   codeBg: "bg-blueGray",
-  codeText: "text-slate-100",
+  codeText: "text-slate-300",
 }
 
 export const C_COLORS: ThemeColors = {
-  bg: "bg-amber-50",
+  bg: "bg-emerald-100",
   text: "text-jet",
   codeBg: "bg-blueGray",
-  codeText: "text-amber-50",
+  codeText: "text-emerald-100",
 }
 
 export const border = "rounded border-2 border-lightBlueGray"

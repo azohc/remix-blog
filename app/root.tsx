@@ -1,11 +1,13 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node"
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
   useLocation,
 } from "@remix-run/react"
 import { createContext, useContext, useState } from "react"
@@ -24,6 +26,29 @@ export const meta: MetaFunction = () => ({
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
 ]
+
+export function CatchBoundary() {
+  const caught = useCatch()
+  return (
+    <html lang="en" className="h-screen">
+      <head>
+        <title>oops</title>
+        <Meta />
+        <Links />
+      </head>
+      <body className="h-screen lg:max-w-4xl lg:mx-auto flex flex-col justify-center items-center">
+        <h1 className="text-6xl">{caught.status}</h1>
+        <h2 className="text-5xl">
+          {caught.statusText.toLowerCase()}
+        </h2>
+        <Link to="/" prefetch="render" className="text-2xl">
+          go home
+        </Link>
+        <Scripts />
+      </body>
+    </html>
+  )
+}
 
 const ColorContext = createContext<null | ColorContextValue>(null)
 

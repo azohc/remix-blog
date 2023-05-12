@@ -67,7 +67,7 @@ export default function Comment({ comment }: CommentProps) {
           showReplyForm ? "mb-4" : "",
         ])}
       >
-        {showReplyForm ? "Discard" : "Reply"}
+        {showReplyForm ? "discard" : "reply"}
       </button>
       {showReplyForm && <CommentForm parentCommentId={comment.id} />}
     </div>

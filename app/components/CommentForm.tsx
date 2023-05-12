@@ -22,7 +22,7 @@ export default function CommentForm({
         htmlFor="author"
         className={join(["opacity-70", colors.text])}
       >
-        Name
+        name
       </label>
       <input
         type="text"
@@ -34,7 +34,7 @@ export default function CommentForm({
         htmlFor="comment"
         className={join(["opacity-70", colors.text])}
       >
-        Comment
+        comment
       </label>
       <textarea
         id="comment"
@@ -59,7 +59,7 @@ export default function CommentForm({
           colors.text,
         ])}
       >
-        Submit
+        submit
       </button>
     </Form>
   )

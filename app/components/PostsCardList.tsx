@@ -13,7 +13,7 @@ export default function PostsCardList({
   const { colors } = useColors()
 
   return (
-    <ul className="flex flex-col gap-2 w-4/5 max-w-sm items-center">
+    <ul className="flex flex-col gap-2 w-4/5 max-w-sm items-center mb-8">
       {posts.map((post) => (
         <Link
           to={`/${post.slug}`}

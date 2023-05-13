@@ -26,16 +26,15 @@ export default function Plank({ onClick, colors }: PlankProps) {
         duration: 0.77,
       }}
       className={join([
-        "transition-[width] h-16 overflow-x-hidden relative cursor-pointer",
-        shifted ? "w-[105px] " : "w-32 bg-amber-50",
-        colors.bg,
+        "transition-[width] h-12 overflow-x-hidden relative cursor-pointer bg-transparent",
+        shifted ? "w-[105px] " : "w-32",
       ])}
       onClick={handleClick}
     >
       <h1
         className={join([
           transform,
-          "absolute text-jet",
+          "absolute text-jet pb-0",
           shifted ? " translate-x-full" : " translate-x-0",
           colors.text,
         ])}
@@ -47,7 +46,7 @@ export default function Plank({ onClick, colors }: PlankProps) {
         className={join([
           colors.text,
           transform,
-          "absolute text-blueGray",
+          "absolute text-blueGray pb-0",
           shifted ? " translate-x-0" : " -translate-x-full",
         ])}
         style={{ backfaceVisibility: "hidden" }}

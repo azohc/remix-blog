@@ -4345,7 +4345,6 @@ export type GetPostsQuery = {
     id: string
     slug: string
     title: string
-    content: string
     tags: Array<string>
     comments: Array<{ id: string }>
   }>
@@ -4475,11 +4474,10 @@ export const GetPostCommentsDocument = /*#__PURE__*/ gql`
 `
 export const GetPostsDocument = /*#__PURE__*/ gql`
   query GetPosts {
-    posts {
+    posts(orderBy: createdAt_DESC) {
       id
       slug
       title
-      content
       tags
       comments {
         id

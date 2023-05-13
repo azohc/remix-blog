@@ -1,9 +1,8 @@
 query GetPosts {
-  posts {
+  posts(orderBy: createdAt_DESC) {
     id
     slug
     title
-    content
     tags
     comments {
       id

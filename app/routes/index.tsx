@@ -16,7 +16,13 @@ export default function Index() {
 
   return (
     <main className="mx-auto mt-16 max-w-7xl flex flex-col items-center px-4">
-      <h2 className={join(["mb-16 w-3/4", colors.bg, colors.text])}>
+      <h2
+        className={join([
+          "mb-8 lg:mb-16 w-3/4",
+          colors.bg,
+          colors.text,
+        ])}
+      >
         <span>lessons learnt on a journey into the world of</span>
         <div className="text-end">
           <code

@@ -60,7 +60,7 @@ export default function PostView({
         <Link
           to="/"
           className={join([
-            "basis-1/12 text-center",
+            "basis-1/12 text-center return-home",
             colors.bg,
             colors.text,
           ])}
